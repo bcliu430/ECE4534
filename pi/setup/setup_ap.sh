@@ -1,0 +1,69 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ "$EUID" -ne 0 ]; then 
+    echo "MUST BE ROOT"
+    exit
+fi 
+
+## install software
+apt-get update -y
+apt-get upgrade -y
+apt-get dist-upgrade -y
+apt-get install dnsmasq hostapd -y
+
+## setup parameter
+echo "writing to /etc/dnsmasq.conf"
+cat > /etc/dnsmasq.conf << EOF
+interface=wlan0
+dhcp-range=192.168.0.10,192.168.0.20,255.255.255.0,12h
+EOF
+
+echo "writing to /etc/hostapd/hostapd.conf"
+cat > /etc/hostapd/hostapd.conf << EOF
+ssid=Team16_pi
+interface=wlan0
+driver=nl80211
+hw_mode=g
+channel=6
+EOF
+
+echo "writing to /etc/default/hostapd"
+sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/default/hostapd
+
+echo "writing to /etc/init.d/hostapd"
+sed -i -- 's/#DAEMON_CONF=""/DAEMON_CONF="\/etc\/hostapd\/hostapd.conf"/g' /etc/init.d/hostapd
+
+
+
+echo "writing to /etc/network/interfaces"
+cat >> /etc/network/interfaces << EOF
+## add pi AP setup
+allow-hotplug wlan0
+iface wlan0 inet static
+    address 192.168.0.100
+    netmask 255.255.255.0
+    network 192.168.1.0
+    broadcast 192.168.1.100
+    gateway 192.168.1.100
+EOF
+
+echo "writing to /etc/dhcpcd.conf"
+echo "denyinterfaces wlan0" >> /etc/dhcpcd.conf
+
+echo "apply changes in 5 seconds, you will lose network"
+echo "connection and reboot"
+sleep 5
+
+sudo service dhcpcd restart ||true
+sudo ifdown wlan0 || true
+sudo ifup wlan0 || true
+
+# /usr/sbin/hostapd /etc/hostapd/hostapd.conf
+systemctl enable hostapd
+systemctl enable dnsmasq
+
+sudo service hostapd start
+sudo service dnsmasq start
+
+reboot

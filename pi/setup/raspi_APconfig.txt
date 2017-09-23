@@ -1,0 +1,69 @@
+* To get a Raspberry Pi configured as an Access Point from a fresh Raspbian Jessie install:
+
+* Make sure you are connected to the internet, and open a terminal
+
+sudo apt-get install dnsmasq hostapd
+
+sudo nano /etc/dhcpcd.conf
+* Add the following at the very bottom:
+denyinterfaces wlan0
+* Save and exit
+
+sudo nano /etc/network/interfaces
+* Edit the wlan0 section so it looks like:
+allow-hotplug wlan0
+iface wlan0 inet static
+	address 192.168.1.100
+	netmask 255.255.255.0
+	network 192.168.1.0
+	broadcast 192.168.1.100
+	gateway 192.168.1.100
+* Save and exit
+
+sudo service dhcpcd restart
+sudo ifdown wlan0
+sudo ifup wlan0
+
+* If you did everything properly, "ifconfig" should show "inet addr:192.168.1.100" under wlan0
+
+sudo nano /etc/hostapd/hostapd.conf
+* Add the following to the file:
+interface=wlan0
+ssid=your_ssid_here
+channel=6
+hw_mode=g
+ignore_broadcast_ssid=0
+wpa=2
+ieee80211n=1
+macaddr_acl=0
+auth_algs=1
+wpa_key_mgmt=WPA-PSK
+wpa_passphrase=your_password_here
+wpa_group_rekey=86400
+rsn_pairwise=CCMP
+wme_enabled=1
+
+sudo nano /etc/default/hostapd
+* Find the line with '#DAEMON_CONF=""' and replace it with:
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
+
+sudo nano /etc/init.d/hostapd
+* Find the line with "DAEMON_CONF=" and replace it with:
+DAEMON_CONF=/etc/hostapd/hostapd.conf
+
+sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+sudo nano /etc/dnsmasq.conf
+* Put the following in the file:
+interface=wlan0
+dhcp-range=192.168.1.100,192.168.1.110,12h
+bind-interfaces
+
+sudo service hostapd start
+sudo service dnsmasq start
+
+* The following will make the services run automatically on boot:
+sudo update-rc.d hostapd enable
+sudo update-rc.d dnsmasq enable
+
+* Finally, reboot with "sudo reboot" and you should be able to connect to the Pi with a properly configured Wifly
+* Download the server_echo.py file from Canvas and run it, and it will echo whatever is sent to it via the Wifly
