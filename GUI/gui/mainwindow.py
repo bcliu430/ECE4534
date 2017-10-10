@@ -1,7 +1,6 @@
 import sys, os
 from PyQt5 import QtGui,QtCore, QtWidgets
 
-
 class MainWindow(QtWidgets.QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -12,7 +11,6 @@ class MainWindow(QtWidgets.QWidget):
         self.us_box = QtWidgets.QVBoxLayout()
 
         self.zvbox = QtWidgets.QVBoxLayout()
-
         vbox = QtWidgets.QVBoxLayout()
         vbox.addLayout(self.main_box)
         vbox.addLayout(self.start_box)
@@ -80,9 +78,40 @@ class MainWindow(QtWidgets.QWidget):
         self.main()
 
     def Debug(self):
+        self.tableWidget = QtWidgets.QTableWidget()
+        self.tableWidget.setRowCount(2)
+        self.tableWidget.setColumnCount(10) 
+        self.tableWidget.setItem(0,0, QtWidgets.QTableWidgetItem("Seq num"))
+        self.tableWidget.setItem(0,1, QtWidgets.QTableWidgetItem("User"))
+        self.tableWidget.setItem(0,2, QtWidgets.QTableWidgetItem("Curr loc"))
+        self.tableWidget.setItem(0,3, QtWidgets.QTableWidgetItem("Motor"))
+        self.tableWidget.setItem(0,4, QtWidgets.QTableWidgetItem("Line Follow"))
+        self.tableWidget.setItem(0,5, QtWidgets.QTableWidgetItem("IR sensor"))
+        self.tableWidget.setItem(0,6, QtWidgets.QTableWidgetItem("AI"))
+        self.tableWidget.setItem(0,7, QtWidgets.QTableWidgetItem("Curr loc"))
+        self.tableWidget.setItem(0,8, QtWidgets.QTableWidgetItem("Motor"))
+        self.tableWidget.setItem(0,9, QtWidgets.QTableWidgetItem("Line Follow"))
+        self.tableWidget.setItem(0,10, QtWidgets.QTableWidgetItem("IR sensor"))
+
+
+        self.tableWidget.setItem(1,0, QtWidgets.QTableWidgetItem("fake data"))
+        self.tableWidget.setItem(1,1, QtWidgets.QTableWidgetItem("2,5"))
+        self.tableWidget.setItem(1,2, QtWidgets.QTableWidgetItem("300"))
+        self.tableWidget.setItem(1,3, QtWidgets.QTableWidgetItem("0x1234"))
+        self.tableWidget.setItem(1,4, QtWidgets.QTableWidgetItem("233"))
+    
+        self.tableWidget.move(0,0)
+
+        self.start = QtWidgets.QPushButton("Start")
+        self.stop = QtWidgets.QPushButton("Stop")
         self.back = QtWidgets.QPushButton("Back")
+
+        self.debug_box.addWidget(self.tableWidget)
+        self.debug_box.addWidget(self.start)
+        self.debug_box.addWidget(self.stop)
         self.debug_box.addWidget(self.back)
 
+        self.setGeometry(300, 100, 600, 400)
         self.back.clicked.connect(self.back_to_main_debug)
 
     def back_to_main_debug(self):
