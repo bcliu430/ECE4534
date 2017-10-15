@@ -9,6 +9,7 @@ def run():
 
     app = QtWidgets.QApplication(sys.argv)
     w = MainWindow()
+    w.resize(1200, 450)
     w.show()
     sys.exit(app.exec_())
 
