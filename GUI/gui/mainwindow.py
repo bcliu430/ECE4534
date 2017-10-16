@@ -3,6 +3,7 @@ import threading
 import json
 from PyQt5 import QtGui,QtCore, QtWidgets
 from server import *
+from start import *
 
 class MainWindow(QtWidgets.QWidget):
     def __init__(self):
@@ -72,7 +73,9 @@ class MainWindow(QtWidgets.QWidget):
         self.Us()
 
     def Start(self):
+        self.start_widget = Start()
         self.back = QtWidgets.QPushButton("Back")
+        self.start_box.addWidget(self.start_widget)
         self.start_box.addWidget(self.back)
 
         self.back.clicked.connect(self.back_to_main_start)
@@ -164,15 +167,15 @@ class MainWindow(QtWidgets.QWidget):
             if not thread2:
                 thread2 =QtCore.QThread() 
            
-            server1 = Server(None)
+#            server1 = Server(None)
             server2 = Server(None)
 
-            server1.moveToThread(thread1)
+#            server1.moveToThread(thread1)
             server2.moveToThread(thread2)
-            thread1.started.connect(server1.run(20000))
+#            thread1.started.connect(server1.run(20000))
             thread2.started.connect(server2.run(20002))
 ### how to start two thread?
-            thread1.start()
+##            thread1.start()
             thread2.start()
             print (thread1.isRunning())
             self.update_table()
