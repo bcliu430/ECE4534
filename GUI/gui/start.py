@@ -32,9 +32,18 @@ class Start(QWidget):
         self.enter2 = QPushButton('Enter')
 
         self.start = QPushButton("Start") #first box
-
-        self.left_btn  = QPushButton('<-')
-        self.right_btn = QPushButton('->')
+        self.start.setMaximumWidth(300)
+        self.start.setMinimumHeight(50)
+        
+        self.left_btn  = QToolButton()
+        self.up_btn  = QToolButton()
+        self.right_btn  = QToolButton()
+        self.left_btn.setArrowType(Qt.LeftArrow)
+        self.up_btn.setArrowType(Qt.UpArrow)
+        self.right_btn.setArrowType(Qt.RightArrow)
+        self.left_btn.setIconSize(QSize(100, 100))
+        self.up_btn.setIconSize(QSize(100, 100))
+        self.right_btn.setIconSize(QSize(100, 100))
 
         self.coor_box.addWidget(self.u,     1,0)
         self.coor_box.addWidget(self.u_coor,1,1)
@@ -46,6 +55,7 @@ class Start(QWidget):
         self.coor_box.addWidget(self.enter2,2,3)
 
         self.dir_box.addWidget(self.left_btn)
+        self.dir_box.addWidget(self.up_btn)
         self.dir_box.addWidget(self.right_btn)
 
         self.vbox.addLayout(self.coor_box)

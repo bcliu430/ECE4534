@@ -10,14 +10,14 @@ class MainWindow(QtWidgets.QWidget):
         super(MainWindow, self).__init__()
         self.main_box  = QtWidgets.QVBoxLayout()
         self.start_box = QtWidgets.QVBoxLayout()
-        self.help_box  = QtWidgets.QVBoxLayout()
+#        self.help_box  = QtWidgets.QVBoxLayout()
         self.debug_box = QtWidgets.QVBoxLayout()
         self.us_box = QtWidgets.QGridLayout()
 
         vbox = QtWidgets.QVBoxLayout()
         vbox.addLayout(self.main_box)
         vbox.addLayout(self.start_box)
-        vbox.addLayout(self.help_box)
+##        vbox.addLayout(self.help_box)
         vbox.addLayout(self.debug_box)
         vbox.addLayout(self.us_box)
 ##        vbox.setAlignment(QtCore.Qt.AlignRight)
@@ -35,8 +35,8 @@ class MainWindow(QtWidgets.QWidget):
         self.start = QtWidgets.QPushButton("Start") #first box
         self.start.setMaximumWidth(width)
 
-        self.help = QtWidgets.QPushButton("Help")
-        self.help.setMaximumWidth(width)
+##        self.help = QtWidgets.QPushButton("Help")
+##        self.help.setMaximumWidth(width)
 
 
         self.debug = QtWidgets.QPushButton("Debug")
@@ -48,11 +48,11 @@ class MainWindow(QtWidgets.QWidget):
 
         self.main_box.addWidget(w)
         self.main_box.addWidget(self.start)
-        self.main_box.addWidget(self.help)
+##        self.main_box.addWidget(self.help)
         self.main_box.addWidget(self.debug)
         self.main_box.addWidget(self.us)
         self.start.clicked.connect(self.main_start)
-        self.help.clicked.connect(self.main_help)
+#        self.help.clicked.connect(self.main_help)
         self.debug.clicked.connect(self.main_debug)
         self.us.clicked.connect(self.main_us)
 
@@ -75,6 +75,7 @@ class MainWindow(QtWidgets.QWidget):
     def Start(self):
         self.start_widget = Start()
         self.back = QtWidgets.QPushButton("Back")
+        self.back.setMaximumWidth(100)
         self.start_box.addWidget(self.start_widget)
         self.start_box.addWidget(self.back)
 
@@ -122,11 +123,20 @@ class MainWindow(QtWidgets.QWidget):
         self.start = QtWidgets.QPushButton("Start")
         self.stop = QtWidgets.QPushButton("Stop")
         self.back = QtWidgets.QPushButton("Back")
+        self.con = QtWidgets.QPushButton("Connect")
+        self.motor = QtWidgets.QPushButton("Send motor")
+        self.LF = QtWidgets.QPushButton("Send LF")
+        self.IR = QtWidgets.QPushButton("Send IR")
 
         self.start.setMaximumWidth(width)
         self.stop.setMaximumWidth(width)
         self.back.setMaximumWidth(width)
         self.debug_box.addWidget(self.tableWidget)
+        self.debug_box.addWidget(self.con)
+        self.debug_box.addWidget(self.motor)
+        self.debug_box.addWidget(self.LF)
+        self.debug_box.addWidget(self.IR)
+        
         self.debug_box.addWidget(self.start)
         self.debug_box.addWidget(self.stop)
         self.debug_box.addWidget(self.back)
@@ -167,16 +177,15 @@ class MainWindow(QtWidgets.QWidget):
             if not thread2:
                 thread2 =QtCore.QThread() 
            
-#            server1 = Server(None)
-            server2 = Server(None)
-
-#            server1.moveToThread(thread1)
-            server2.moveToThread(thread2)
-#            thread1.started.connect(server1.run(20000))
-            thread2.started.connect(server2.run(20002))
+            server1 = Server(None)
+#            server2 = Server(None)
+            server1.moveToThread(thread1)
+#            server2.moveToThread(thread2)
+            thread1.started.connect(server1.run())
+#            thread2.started.connect(server2.run(20002))
 ### how to start two thread?
-##            thread1.start()
-            thread2.start()
+            thread1.start()
+#            thread2.start()
             print (thread1.isRunning())
             self.update_table()
         else:
