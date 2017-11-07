@@ -65,4 +65,13 @@ class Start(QWidget):
         self.hbox.addWidget(self.view)
         self.hbox.addLayout(self.vbox)
 
-        
+    def draw(self, item):
+        self.scene.addItem(item);
+
+    def update_grid(self, curr, new):
+        line = QGraphicsLineItem(curr[0], curr[1], new[0], new[1])
+        pen = QPen()
+        pen.setColor(Qt.red)
+        line.setPen(pen)
+        self.item = line
+        self.draw(self.item)
