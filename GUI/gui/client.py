@@ -6,7 +6,7 @@ A simple echo client
 import socket
 
 host = ''
-port = 2001
+port = 2000
 size = 1024
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host,port))

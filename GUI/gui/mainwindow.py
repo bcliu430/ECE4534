@@ -2,7 +2,6 @@ import sys, os
 import threading
 import json
 from PyQt5 import QtGui,QtCore, QtWidgets
-from server import *
 from start import *
 
 class MainWindow(QtWidgets.QWidget):
@@ -10,17 +9,14 @@ class MainWindow(QtWidgets.QWidget):
         super(MainWindow, self).__init__()
         self.main_box  = QtWidgets.QVBoxLayout()
         self.start_box = QtWidgets.QVBoxLayout()
-#        self.help_box  = QtWidgets.QVBoxLayout()
         self.debug_box = QtWidgets.QVBoxLayout()
         self.us_box = QtWidgets.QGridLayout()
 
         vbox = QtWidgets.QVBoxLayout()
         vbox.addLayout(self.main_box)
         vbox.addLayout(self.start_box)
-##        vbox.addLayout(self.help_box)
         vbox.addLayout(self.debug_box)
         vbox.addLayout(self.us_box)
-##        vbox.setAlignment(QtCore.Qt.AlignRight)
         self.setLayout(vbox)
 
         self.main()
@@ -35,9 +31,6 @@ class MainWindow(QtWidgets.QWidget):
         self.start = QtWidgets.QPushButton("Start") #first box
         self.start.setMaximumWidth(width)
 
-##        self.help = QtWidgets.QPushButton("Help")
-##        self.help.setMaximumWidth(width)
-
 
         self.debug = QtWidgets.QPushButton("Debug")
         self.debug.setMaximumWidth(width)
@@ -48,11 +41,9 @@ class MainWindow(QtWidgets.QWidget):
 
         self.main_box.addWidget(w)
         self.main_box.addWidget(self.start)
-##        self.main_box.addWidget(self.help)
         self.main_box.addWidget(self.debug)
         self.main_box.addWidget(self.us)
         self.start.clicked.connect(self.main_start)
-#        self.help.clicked.connect(self.main_help)
         self.debug.clicked.connect(self.main_debug)
         self.us.clicked.connect(self.main_us)
 
@@ -74,6 +65,7 @@ class MainWindow(QtWidgets.QWidget):
 
     def Start(self):
         self.start_widget = Start()
+        self.start_widget.update_grid([0.0,10], [ 100,0] )
         self.back = QtWidgets.QPushButton("Back")
         self.back.setMaximumWidth(100)
         self.start_box.addWidget(self.start_widget)
@@ -83,18 +75,6 @@ class MainWindow(QtWidgets.QWidget):
 
     def back_to_main_start(self):
         self.remove_second_view()
-        self.main()
-
-    def Help(self):
-        width = 100
-        self.back = QtWidgets.QPushButton("Back")
-        self.back.setMaximumWidth(width)
-        self.help_box.addWidget(self.back)
-
-        self.back.clicked.connect(self.back_to_main_help)
-
-    def back_to_main_help(self):
-        self.remove_third_view()
         self.main()
 
     def Debug(self):
@@ -248,16 +228,6 @@ class MainWindow(QtWidgets.QWidget):
             # takeAt does both the jobs of itemAt and removeWidget
             # namely it removes an item and returns it
             widget = self.start_box.takeAt(cnt).widget()
-
-            if widget is not None: 
-                # widget will be None if the item is a layout
-                widget.deleteLater()
-
-    def remove_third_view(self):
-        for cnt in reversed(range(self.help_box.count())):
-            # takeAt does both the jobs of itemAt and removeWidget
-            # namely it removes an item and returns it
-            widget = self.help_box.takeAt(cnt).widget()
 
             if widget is not None: 
                 # widget will be None if the item is a layout
