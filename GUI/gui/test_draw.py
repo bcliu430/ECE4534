@@ -3,6 +3,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from start import *
+from time import sleep
+
+
 class Test(QWidget):
     def __init__(self):
         super(Test, self).__init__()
@@ -14,8 +17,12 @@ class Test(QWidget):
 
     def test(self):
         self.start_widget = Start()
-        self.start_widget.update_grid([0.0,10], [ 100,0] )
+
         self.start_box.addWidget(self.start_widget)
+        self.start_widget.update_grid([0.0,10], [ 100,0] )
+        sleep(10)
+
+        self.start_widget.update_grid([0.0,100], [ 10,0] )
 
 def run():
 
