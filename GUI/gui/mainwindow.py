@@ -81,41 +81,18 @@ class MainWindow(QtWidgets.QWidget):
         width = 100
         self.tableWidget = QtWidgets.QTableWidget()
         self.tableWidget.setRowCount(11)
-        self.tableWidget.setColumnCount(11) 
-        self.tableWidget.setItem(0,0, QtWidgets.QTableWidgetItem("Rover"))
-        self.tableWidget.setItem(0,1, QtWidgets.QTableWidgetItem("Seq num"))
-        self.tableWidget.setItem(0,2, QtWidgets.QTableWidgetItem("Motor"))
-        self.tableWidget.setItem(0,3, QtWidgets.QTableWidgetItem("Line Follow"))
-        self.tableWidget.setItem(0,4, QtWidgets.QTableWidgetItem("IR sensor"))
-
-        self.tableWidget.setItem(0,6, QtWidgets.QTableWidgetItem("Rover"))
-        self.tableWidget.setItem(0,7, QtWidgets.QTableWidgetItem("Seq num"))
-        self.tableWidget.setItem(0,8, QtWidgets.QTableWidgetItem("Motor"))
-        self.tableWidget.setItem(0,9, QtWidgets.QTableWidgetItem("Line Follow"))
-        self.tableWidget.setItem(0,10, QtWidgets.QTableWidgetItem("IR sensor"))
-
-        self.tableWidget.setItem(1,6, QtWidgets.QTableWidgetItem("AI"))
-        self.tableWidget.setItem(1,7, QtWidgets.QTableWidgetItem("9"))
-        self.tableWidget.setItem(1,8, QtWidgets.QTableWidgetItem("300"))
-        self.tableWidget.setItem(1,9, QtWidgets.QTableWidgetItem("0x1234"))
-        self.tableWidget.setItem(1,10, QtWidgets.QTableWidgetItem("233"))
+        self.tableWidget.setColumnCount(2) 
+        self.tableWidget.setItem(0,0, QtWidgets.QTableWidgetItem("User"))
+        self.tableWidget.setItem(0,1, QtWidgets.QTableWidgetItem("AI"))
     
         self.start = QtWidgets.QPushButton("Start")
         self.stop = QtWidgets.QPushButton("Stop")
         self.back = QtWidgets.QPushButton("Back")
-        self.con = QtWidgets.QPushButton("Connect")
-        self.motor = QtWidgets.QPushButton("Send motor")
-        self.LF = QtWidgets.QPushButton("Send LF")
-        self.IR = QtWidgets.QPushButton("Send IR")
 
         self.start.setMaximumWidth(width)
         self.stop.setMaximumWidth(width)
         self.back.setMaximumWidth(width)
         self.debug_box.addWidget(self.tableWidget)
-        self.debug_box.addWidget(self.con)
-        self.debug_box.addWidget(self.motor)
-        self.debug_box.addWidget(self.LF)
-        self.debug_box.addWidget(self.IR)
         
         self.debug_box.addWidget(self.start)
         self.debug_box.addWidget(self.stop)
@@ -127,20 +104,17 @@ class MainWindow(QtWidgets.QWidget):
         self.stop.clicked.connect(lambda: self.Debug_func(False))
         self.back.clicked.connect(self.back_to_main_debug)
 
-    def update_table(self):
-        data={'rover':'user'}
-        if (data['rover'] == 'user'):
+    @pyqtSlot(str)
+    def update_user(self, data):
             for i in range (1,11):
-                self.tableWidget.setItem(i,0, QtWidgets.QTableWidgetItem("User"))
-                self.tableWidget.setItem(i,1, QtWidgets.QTableWidgetItem("123")) ##data['seq'][i]
-                self.tableWidget.setItem(i,2, QtWidgets.QTableWidgetItem("0x1234")) ##data['motor'][i]
-                self.tableWidget.setItem(i,3, QtWidgets.QTableWidgetItem("0x12")) ##data['line'][i]
-                self.tableWidget.setItem(i,4, QtWidgets.QTableWidgetItem("0x34")) ##data['IR'][i]
+                self.tableWidget.setItem(i,0, QtWidgets.QTableWidgetItem(data[i]))
 
-        elif (data["rover"] == 'AI'):
-                pass
+    @pyqtSlot(str)
+    def update_user(self, data):
+            for i in range (1,11):
+                self.tableWidget.setItem(i,0, QtWidgets.QTableWidgetItem(data[i]))
 
-	
+
     def Debug_func(self,enable):
         print (enable)
         global thread1, server1
