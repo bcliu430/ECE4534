@@ -4,46 +4,54 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 from time import sleep
+from mainwindow import MainWindow
+
 class Controller(QObject):
     appStart = pyqtSignal(str)
-    cmd = pyqtSignal(str)
+    cmd1 = pyqtSignal(str)
+    user_update_table = pyqtSignal(list)
     host = '192.168.0.16'
     port = 2000
     count = 0
     data_l = []
+    m = MainWindow()
     def __init__(self):
         super(Controller, self).__init__()
 
-        self.recvThread = QThread()
-        self.recvObj = Receiver()
-        self.recvObj.moveToThread(self.recvThread)
-        self.appStart.connect(self.recvObj.recvMsg)
+        self.recvThread1 = QThread()
+        self.recvObj1 = Receiver()
+        self.recvObj1.moveToThread(self.recvThread1)
+        self.appStart.connect(self.recvObj1.recvMsg)
 
  #       self.sendThread = QThread()
  #       self.sendObj = Sender()
  #       self.sendObj.moveToThread(self.sendThread)
-        self.cmd.connect(self.recvObj.sendMsg)
+        self.cmd1.connect(self.recvObj1.sendMsg)
+        self.recvObj1.newdata.connect(self.append_data)
+        self.user_update_table.connect(m.update_user)
 
-        self.recvObj.newdata.connect(self.append_data)
     def start(self):
         self.recvThread.start()
-#        self.sendThread.start()
         self.appStart.emit(self.host)
-#        self.cmd.emit(('hello'), self.host)
-#        sleep(3)
 
     @pyqtSlot(str)
     def append_data(self, data):
         self.count +=1
         self.data_l.append(data)
         temp = data.split()
+
+
         for i in range(0, int(temp[0])):
             if 'P' in temp:
                 print('hit joint')       
+#               get user input/ AI next coordinate here
 #                self.stop.emit()
+#               get this part working
                 self.cmd.emit(('hello'))
             else:
                 pass
+        if (len(data_l) == 10):
+            self.user_update_table.emit(data_l)
         print('Controller: '+data)
     
 

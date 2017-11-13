@@ -31,13 +31,11 @@ class MainWindow(QtWidgets.QWidget):
         self.start = QtWidgets.QPushButton("Start") #first box
         self.start.setMaximumWidth(width)
 
-
         self.debug = QtWidgets.QPushButton("Debug")
         self.debug.setMaximumWidth(width)
 
         self.us = QtWidgets.QPushButton("About us")
         self.us.setMaximumWidth(width)
-
 
         self.main_box.addWidget(w)
         self.main_box.addWidget(self.start)
@@ -65,7 +63,7 @@ class MainWindow(QtWidgets.QWidget):
 
     def Start(self):
         self.start_widget = Start()
-        self.start_widget.update_grid([0.0,10], [ 100,0] )
+##        self.start_widget.update_grid([0.0,10], [ 100,0] )
         self.back = QtWidgets.QPushButton("Back")
         self.back.setMaximumWidth(100)
         self.start_box.addWidget(self.start_widget)
@@ -104,15 +102,15 @@ class MainWindow(QtWidgets.QWidget):
         self.stop.clicked.connect(lambda: self.Debug_func(False))
         self.back.clicked.connect(self.back_to_main_debug)
 
-    @pyqtSlot(str)
+    @pyqtSlot(list)
     def update_user(self, data):
             for i in range (1,11):
                 self.tableWidget.setItem(i,0, QtWidgets.QTableWidgetItem(data[i]))
 
-    @pyqtSlot(str)
-    def update_user(self, data):
+    @pyqtSlot(list)
+    def update_AI(self, data):
             for i in range (1,11):
-                self.tableWidget.setItem(i,0, QtWidgets.QTableWidgetItem(data[i]))
+                self.tableWidget.setItem(i,1, QtWidgets.QTableWidgetItem(data[i]))
 
 
     def Debug_func(self,enable):
@@ -120,7 +118,6 @@ class MainWindow(QtWidgets.QWidget):
         global thread1, server1
         global thread2, server2
         sgnStop = QtCore.pyqtSignal()
-
 
         if enable:
             thread1 = None   

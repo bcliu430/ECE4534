@@ -1,6 +1,9 @@
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from Arena import Arena
+from Controller import Controller
+
 
 class Start(QWidget):
     def __init__(self):
@@ -8,11 +11,10 @@ class Start(QWidget):
         self.coor_box = QGridLayout()
         self.dir_box =  QHBoxLayout()
         
-        self.scene = QGraphicsScene()
-        self.view = QGraphicsView()
-        self.view.setScene(self.scene)
+        self.view = Arena()
 
         self.hbox = QHBoxLayout()
+        self.hbox.addWidget(self.view)
         self.vbox = QVBoxLayout()
         self.setLayout(self.hbox)
         self.main()
@@ -62,16 +64,45 @@ class Start(QWidget):
         self.vbox.addWidget(self.start)
         self.vbox.addLayout(self.dir_box)
         
-        self.hbox.addWidget(self.view)
         self.hbox.addLayout(self.vbox)
 
-    def draw(self, item):
-        self.scene.addItem(item);
+        self.start.clicked.connect(self.start_slot)
+        self.enter1.clicked.connect(self.enter1_text)
+        self.enter2.clicked.connect(self.enter2_text)
 
-    def update_grid(self, curr, new):
-        line = QGraphicsLineItem(curr[0], curr[1], new[0], new[1])
-        pen = QPen()
-        pen.setColor(Qt.red)
-        line.setPen(pen)
-        self.item = line
-        self.draw(self.item)
+        self.left_btn.clicked.connect(self.on_left)
+        self.up_btn.clicked.connect(self.on_up)
+        self.right_btn.clicked.connect(self.on_right)
+
+    @pyqtSlot()
+    def start_slot(self):
+        print("start pressed")
+    
+
+    @pyqtSlot()
+    def enter1_text(self):
+        c = self.u_coor.text()
+        d = self.u_dire.text()
+
+        print (c, d)
+
+    @pyqtSlot()
+    def enter2_text(self):
+        c = self.a_coor.text()
+        d = self.a_dire.text()
+
+        print (c, d)
+
+    @pyqtSlot()
+    def on_left(self):
+        print('L')
+
+    @pyqtSlot()
+    def on_up(self):
+        print('F')
+
+    @pyqtSlot()
+    def on_right(self):
+        print('R')
+
+
