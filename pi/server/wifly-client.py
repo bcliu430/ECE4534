@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import serial
-import time.sleep
+from time import sleep
 
-dev='/dev/...'
+
+dev='/dev/ttyUSB2'
 baud=57600
-ssid=
-
+ssid='Team16_pi'
+s = serial.Serial(dev, baud, timeout=1)
 
 def send_cmd(s, cmd):
     for c in cmd:
@@ -15,11 +16,10 @@ def send_cmd(s, cmd):
 
 def get_reply(s):
     reply = s.readlines()
-    print ('received reply:'+ reply)
-    return ''.join(reply)
+    return reply
 
 def test_conn():
-    s = serial.Serial(dev, timeout=1, baud)
+
     send_cmd(s, '$$$')
     reply = get_reply(s)
     if 'CMD' in reply:
@@ -29,5 +29,24 @@ def test_conn():
             return true
 
 def main():
-    if test_conn():
-        
+    while 1:
+        if b'*OPEN*' in get_reply(s):
+            break
+    print ('debug')
+    while 1:
+#        print(get_reply(s))
+        msg = [b'\xff', b'\x01', b'\x4c', b'\x00', b'\xfe']
+        send_cmd(s, msg)
+        sleep(0.05)
+
+        msg = [b'\xff', b'\x02', b'\x4c', b'\x00', b'\x53', b'\x05', b'\xfe']
+        send_cmd(s, msg)
+        sleep(0.05)
+
+        msg = [b'\xff', b'\x01', b'\x50', b'\x0f', b'\xfe']
+        send_cmd(s, msg)
+        sleep(0.05)
+
+
+
+main() 

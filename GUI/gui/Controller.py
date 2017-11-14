@@ -23,7 +23,11 @@ class Controller(QObject):
         self.recvObj1.moveToThread(self.recvThread1)
         self.appStart.connect(self.recvObj1.recvMsg)
 
- #       self.sendThread = QThread()
+        self.GUI_thread = QThread()
+        self.Gui = MainWindow()
+        self.Gui.show()
+        self.Gui.MoveToThread(self.GUI_thread)
+ #       self.sendThread  QThread()
  #       self.sendObj = Sender()
  #       self.sendObj.moveToThread(self.sendThread)
         self.cmd1.connect(self.recvObj1.sendMsg)
@@ -31,6 +35,7 @@ class Controller(QObject):
         self.user_update_table.connect(m.update_user)
 
     def start(self):
+        self.GUI_thread.start()
         self.recvThread.start()
         self.appStart.emit(self.host)
 

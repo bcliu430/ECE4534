@@ -2,14 +2,14 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from Arena import Arena
-from Controller import Controller
+##from Controller import Controller
 
 
 class Start(QWidget):
     def __init__(self):
         super(Start,self).__init__()
         self.coor_box = QGridLayout()
-        self.dir_box =  QHBoxLayout()
+        self.dir_box =  QGridLayout()
         
         self.view = Arena()
 
@@ -36,15 +36,18 @@ class Start(QWidget):
         self.start = QPushButton("Start") #first box
         self.start.setMaximumWidth(300)
         self.start.setMinimumHeight(50)
-        
         self.left_btn  = QToolButton()
         self.up_btn  = QToolButton()
+        self.bottom_btn  = QToolButton()
         self.right_btn  = QToolButton()
+
         self.left_btn.setArrowType(Qt.LeftArrow)
         self.up_btn.setArrowType(Qt.UpArrow)
+        self.bottom_btn.setArrowType(Qt.DownArrow)
         self.right_btn.setArrowType(Qt.RightArrow)
         self.left_btn.setIconSize(QSize(100, 100))
         self.up_btn.setIconSize(QSize(100, 100))
+        self.bottom_btn.setIconSize(QSize(100, 100))
         self.right_btn.setIconSize(QSize(100, 100))
 
         self.coor_box.addWidget(self.u,     1,0)
@@ -56,9 +59,10 @@ class Start(QWidget):
         self.coor_box.addWidget(self.a_dire,2,2)
         self.coor_box.addWidget(self.enter2,2,3)
 
-        self.dir_box.addWidget(self.left_btn)
-        self.dir_box.addWidget(self.up_btn)
-        self.dir_box.addWidget(self.right_btn)
+        self.dir_box.addWidget(self.left_btn, 1, 0)
+        self.dir_box.addWidget(self.up_btn, 0, 1)
+        self.dir_box.addWidget(self.bottom_btn, 1, 1)
+        self.dir_box.addWidget(self.right_btn, 1,2)
 
         self.vbox.addLayout(self.coor_box)
         self.vbox.addWidget(self.start)
@@ -72,6 +76,7 @@ class Start(QWidget):
 
         self.left_btn.clicked.connect(self.on_left)
         self.up_btn.clicked.connect(self.on_up)
+        self.bottom_btn.clicked.connect(self.on_bottom)
         self.right_btn.clicked.connect(self.on_right)
 
     @pyqtSlot()
@@ -95,14 +100,18 @@ class Start(QWidget):
 
     @pyqtSlot()
     def on_left(self):
-        print('L')
+        print('W')
 
     @pyqtSlot()
     def on_up(self):
-        print('F')
+        print('N')
+
+    @pyqtSlot()
+    def on_bottom(self):
+        print('S')
 
     @pyqtSlot()
     def on_right(self):
-        print('R')
+        print('E')
 
 

@@ -41,6 +41,8 @@ class MainWindow(QtWidgets.QWidget):
         self.main_box.addWidget(self.start)
         self.main_box.addWidget(self.debug)
         self.main_box.addWidget(self.us)
+        pic.setScaledContents(True)
+        pic.setMinimumSize(1,1)
         self.start.clicked.connect(self.main_start)
         self.debug.clicked.connect(self.main_debug)
         self.us.clicked.connect(self.main_us)
