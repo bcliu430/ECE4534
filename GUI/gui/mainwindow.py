@@ -1,18 +1,20 @@
 import sys, os
-import threading
 import json
-from PyQt5 import QtGui,QtCore, QtWidgets
-from start import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from start import Start
+from Controller import Controller
 
-class MainWindow(QtWidgets.QWidget):
+class MainWindow(QWidget):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.main_box  = QtWidgets.QVBoxLayout()
-        self.start_box = QtWidgets.QVBoxLayout()
-        self.debug_box = QtWidgets.QVBoxLayout()
-        self.us_box = QtWidgets.QGridLayout()
+        self.main_box  = QVBoxLayout()
+        self.start_box = QVBoxLayout()
+        self.debug_box = QVBoxLayout()
+        self.us_box = QGridLayout()
 
-        vbox = QtWidgets.QVBoxLayout()
+        vbox = QVBoxLayout()
         vbox.addLayout(self.main_box)
         vbox.addLayout(self.start_box)
         vbox.addLayout(self.debug_box)
@@ -22,19 +24,19 @@ class MainWindow(QtWidgets.QWidget):
         self.main()
 
     def main(self):
-        w = QtWidgets.QWidget()
+        w = QWidget()
         width = 100
-        pic = QtWidgets.QLabel(w)
-        pic.setPixmap(QtGui.QPixmap(os.getcwd() + "/Tron_Lightcycles.jpg"))
+        pic = QLabel(w)
+        pic.setPixmap(QPixmap(os.getcwd() + "/Tron_Lightcycles.jpg"))
         pic.resize(597,297) 
 
-        self.start = QtWidgets.QPushButton("Start") #first box
+        self.start = QPushButton("Start") #first box
         self.start.setMaximumWidth(width)
 
-        self.debug = QtWidgets.QPushButton("Debug")
+        self.debug = QPushButton("Debug")
         self.debug.setMaximumWidth(width)
 
-        self.us = QtWidgets.QPushButton("About us")
+        self.us = QPushButton("About us")
         self.us.setMaximumWidth(width)
 
         self.main_box.addWidget(w)
@@ -65,8 +67,7 @@ class MainWindow(QtWidgets.QWidget):
 
     def Start(self):
         self.start_widget = Start()
-##        self.start_widget.update_grid([0.0,10], [ 100,0] )
-        self.back = QtWidgets.QPushButton("Back")
+        self.back = QPushButton("Back")
         self.back.setMaximumWidth(100)
         self.start_box.addWidget(self.start_widget)
         self.start_box.addWidget(self.back)
@@ -79,15 +80,15 @@ class MainWindow(QtWidgets.QWidget):
 
     def Debug(self):
         width = 100
-        self.tableWidget = QtWidgets.QTableWidget()
+        self.tableWidget = QTableWidget()
         self.tableWidget.setRowCount(11)
         self.tableWidget.setColumnCount(2) 
-        self.tableWidget.setItem(0,0, QtWidgets.QTableWidgetItem("User"))
-        self.tableWidget.setItem(0,1, QtWidgets.QTableWidgetItem("AI"))
+        self.tableWidget.setItem(0,0, QTableWidgetItem("User"))
+        self.tableWidget.setItem(0,1, QTableWidgetItem("AI"))
     
-        self.start = QtWidgets.QPushButton("Start")
-        self.stop = QtWidgets.QPushButton("Stop")
-        self.back = QtWidgets.QPushButton("Back")
+        self.start = QPushButton("Start")
+        self.stop = QPushButton("Stop")
+        self.back = QPushButton("Back")
 
         self.start.setMaximumWidth(width)
         self.stop.setMaximumWidth(width)
@@ -107,44 +108,15 @@ class MainWindow(QtWidgets.QWidget):
     @pyqtSlot(list)
     def update_user(self, data):
             for i in range (1,11):
-                self.tableWidget.setItem(i,0, QtWidgets.QTableWidgetItem(data[i]))
+                self.tableWidget.setItem(i,0, QTableWidgetItem(data[i]))
 
     @pyqtSlot(list)
     def update_AI(self, data):
             for i in range (1,11):
-                self.tableWidget.setItem(i,1, QtWidgets.QTableWidgetItem(data[i]))
+                self.tableWidget.setItem(i,1, QTableWidgetItem(data[i]))
 
 
     def Debug_func(self,enable):
-        print (enable)
-        global thread1, server1
-        global thread2, server2
-        sgnStop = QtCore.pyqtSignal()
-
-        if enable:
-            thread1 = None   
-            thread2 = None                            
-            if not thread1:
-                thread1 =QtCore.QThread()
-
-            if not thread2:
-                thread2 =QtCore.QThread() 
-           
-            server1 = Server(None)
-#            server2 = Server(None)
-            server1.moveToThread(thread1)
-#            server2.moveToThread(thread2)
-            thread1.started.connect(server1.run())
-#            thread2.started.connect(server2.run(20002))
-### how to start two thread?
-            thread1.start()
-#            thread2.start()
-            print (thread1.isRunning())
-            self.update_table()
-        else:
-            print (thread1)
-            server.stop()
-            thread1.terminate()
             print('thread stop')
 
     def back_to_main_debug(self):
@@ -152,24 +124,24 @@ class MainWindow(QtWidgets.QWidget):
         self.main()
 
     def Us(self):
-        gu = QtWidgets.QLabel()
-        gu.setPixmap(QtGui.QPixmap(os.getcwd() + "/sample.jpg"))
-        Hao = QtWidgets.QLabel('Hao Gu\nAI Algorithm\nLine Following Sensor') 
+        gu = QLabel()
+        gu.setPixmap(QPixmap(os.getcwd() + "/sample.jpg"))
+        Hao = QLabel('Hao Gu\nAI Algorithm\nLine Following Sensor') 
 
-        liang = QtWidgets.QLabel()
-        liang.setPixmap(QtGui.QPixmap(os.getcwd() + "/sample.jpg"))
-        Yuqiao = QtWidgets.QLabel('Yuqiao Liang\nmotor') 
+        liang = QLabel()
+        liang.setPixmap(QPixmap(os.getcwd() + "/sample.jpg"))
+        Yuqiao = QLabel('Yuqiao Liang\nmotor') 
 
-        liu = QtWidgets.QLabel()
-        liu.setPixmap(QtGui.QPixmap(os.getcwd() + "/sample.jpg"))
-        Beichen = QtWidgets.QLabel('Beichen Liu\nGUI Interface\nWi-Fly Communication') 
+        liu = QLabel()
+        liu.setPixmap(QPixmap(os.getcwd() + "/sample.jpg"))
+        Beichen = QLabel('Beichen Liu\nGUI Interface\nWi-Fly Communication') 
 
-        tsongalis = QtWidgets.QLabel()
-        tsongalis.setPixmap(QtGui.QPixmap(os.getcwd() + "/sample.jpg"))
-        Peter = QtWidgets.QLabel('Peter Tsongalis\nCommunication\nIR sensor') 
+        tsongalis = QLabel()
+        tsongalis.setPixmap(QPixmap(os.getcwd() + "/sample.jpg"))
+        Peter = QLabel('Peter Tsongalis\nCommunication\nIR sensor') 
     
 
-        self.back = QtWidgets.QPushButton("Back")
+        self.back = QPushButton("Back")
         self.us_box.addWidget(gu, 0, 0)
         self.us_box.addWidget(Hao, 1, 0)
         self.us_box.addWidget(liang, 0 ,1)
@@ -225,6 +197,13 @@ class MainWindow(QtWidgets.QWidget):
             if widget is not None: 
                 # widget will be None if the item is a layout
                 widget.deleteLater()
+def run():
 
+    app = QApplication(sys.argv)
+    w = MainWindow()
+    w.resize(1200, 450)
+    w.show()
+    sys.exit(app.exec_())
 
-
+if __name__ == "__main__":
+    run()

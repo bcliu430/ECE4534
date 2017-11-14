@@ -3,8 +3,7 @@ from sender import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
-from time import sleep
-from mainwindow import MainWindow
+#from mainwindow import MainWindow
 
 class Controller(QObject):
     appStart = pyqtSignal(str)
@@ -14,7 +13,7 @@ class Controller(QObject):
     port = 2000
     count = 0
     data_l = []
-    m = MainWindow()
+#    m = MainWindow()
     def __init__(self):
         super(Controller, self).__init__()
 
@@ -22,21 +21,16 @@ class Controller(QObject):
         self.recvObj1 = Receiver()
         self.recvObj1.moveToThread(self.recvThread1)
         self.appStart.connect(self.recvObj1.recvMsg)
-
         self.GUI_thread = QThread()
-        self.Gui = MainWindow()
-        self.Gui.show()
-        self.Gui.MoveToThread(self.GUI_thread)
  #       self.sendThread  QThread()
  #       self.sendObj = Sender()
  #       self.sendObj.moveToThread(self.sendThread)
-        self.cmd1.connect(self.recvObj1.sendMsg)
+        self.cmd1.connect(self.recvObj1.sendMsg) ## not connected???
         self.recvObj1.newdata.connect(self.append_data)
-        self.user_update_table.connect(m.update_user)
+ #       self.user_update_table.connect(m.update_user)
 
     def start(self):
-        self.GUI_thread.start()
-        self.recvThread.start()
+        self.recvThread1.start()
         self.appStart.emit(self.host)
 
     @pyqtSlot(str)
@@ -52,21 +46,17 @@ class Controller(QObject):
 #               get user input/ AI next coordinate here
 #                self.stop.emit()
 #               get this part working
-                self.cmd.emit(('hello'))
+                self.cmd1.emit('1')
             else:
                 pass
-        if (len(data_l) == 10):
-            self.user_update_table.emit(data_l)
-        print('Controller: '+data)
+#        if (len(data_l) == 10):
+#            self.user_update_table.emit(data_l)
+#        print('Controller: '+data)
     
-
-
 if __name__ == "__main__":
-        app = QCoreApplication([])
-        msg = 'hello'
-        c = Controller()
-        c.start()
-        print('test')
-        sys.exit(app.exec_())
-
-
+    app = QCoreApplication([])
+    msg = 'hello'
+    c = Controller()
+    c.start()
+    print('test')
+    sys.exit(app.exec_())

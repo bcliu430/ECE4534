@@ -3,6 +3,12 @@ from PyQt5.QtCore import QObject, pyqtSlot, pyqtSignal
 from enum import Enum
 from bitstring import BitArray
 
+class MSG(Enum):
+    North = [b'\xff', b'\x01', b'\x57', b'\x4e', b'\xfe']
+    South = [b'\xff', b'\x01', b'\x57', b'\x53', b'\xfe']
+    West = [b'\xff', b'\x01', b'\x57', b'\x57', b'\xfe']
+    East = [b'\xff', b'\x01', b'\x57', b'\x45', b'\xfe']
+
 class STATE(Enum):
     STARTBYTE = 0
     NUMBYTES = 1
@@ -58,11 +64,22 @@ class Receiver(QObject):
 
     @pyqtSlot(str)
     def sendMsg(self, msg):
-        prototype = 'ff01w{}fe'.format(msg)
-        print(prototype)
-        print ("message: {}".format(msg))
-        for b in msg:
-            self.s.send(b.encode())
+        print('send')
+        if msg == '1':
+            for b in MSG.North:
+                self.s.send(b)
+        elif msg == '2':
+            for b in MSG.South:
+                self.s.send(b)
+
+        if msg == '3':
+            for b in MSG.West:
+                self.s.send(b)
+
+        if msg == '1':
+            for b in MSG.East:
+                self.s.send(b)
+
 
 '''
 TODO: 1. emit a signal to send the debug data to GUI

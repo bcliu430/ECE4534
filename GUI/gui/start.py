@@ -2,8 +2,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from Arena import Arena
-##from Controller import Controller
-
+#from Controller import Controller
 
 class Start(QWidget):
     def __init__(self):
