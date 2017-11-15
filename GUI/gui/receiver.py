@@ -65,18 +65,18 @@ class Receiver(QObject):
     @pyqtSlot(str)
     def sendMsg(self, msg):
         print('send')
-        if msg == '1':
+        if msg == 'N':
             for b in MSG.North:
                 self.s.send(b)
-        elif msg == '2':
+        elif msg == 'S':
             for b in MSG.South:
                 self.s.send(b)
 
-        if msg == '3':
+        if msg == 'W':
             for b in MSG.West:
                 self.s.send(b)
 
-        if msg == '1':
+        if msg == 'E':
             for b in MSG.East:
                 self.s.send(b)
 

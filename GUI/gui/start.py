@@ -2,15 +2,26 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from Arena import Arena
-#from Controller import Controller
+from Controller import Controller
 
 class Start(QWidget):
+    user_loc = pyqtSignal(str)
+    AI_loc = pyqtSignal(str)
+    direction = pyqtSignal(str)
+    start = pyqtSignal()
+    c = Controller()
     def __init__(self):
         super(Start,self).__init__()
         self.coor_box = QGridLayout()
         self.dir_box =  QGridLayout()
-        
+ 
         self.view = Arena()
+
+        self.user_loc.connect(self.c.user_loc)
+        self.direction.connect(self.c.user_dir)
+
+        self.ctl_thread = QThread()
+        self.c.moveToThread(self.ctl_thread)
 
         self.hbox = QHBoxLayout()
         self.hbox.addWidget(self.view)
@@ -81,36 +92,37 @@ class Start(QWidget):
     @pyqtSlot()
     def start_slot(self):
         print("start pressed")
-    
+        self.ctl_thread.run()
 
     @pyqtSlot()
     def enter1_text(self):
-        c = self.u_coor.text()
+        co = self.u_coor.text()
         d = self.u_dire.text()
-
-        print (c, d)
+        self.user_loc.emit(co+d)
 
     @pyqtSlot()
     def enter2_text(self):
-        c = self.a_coor.text()
+        co = self.a_coor.text()
         d = self.a_dire.text()
-
-        print (c, d)
+        
+        print (co, d)
 
     @pyqtSlot()
     def on_left(self):
         print('W')
+        self.direction.emit('W')
 
     @pyqtSlot()
     def on_up(self):
         print('N')
-
+        self.direction.emit('N')
+        
     @pyqtSlot()
     def on_bottom(self):
         print('S')
+        self.direction.emit('S')
 
     @pyqtSlot()
     def on_right(self):
         print('E')
-
-
+        self.direction.emit('E')
