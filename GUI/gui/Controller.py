@@ -15,6 +15,8 @@ class Controller(QObject):
     count = 0
     data_l = []
     user_coor_list = [] 
+    user_coor = [1, 2]
+    user_dire = 'N'
     def __init__(self):
         super(Controller, self).__init__()
         print ('start')
