@@ -1,4 +1,5 @@
-from receiver import *
+#from receiver import *
+from receiver_fake import *
 from getCoor import Coor
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -19,27 +20,24 @@ class Controller(QObject):
     user_dire = 'N'
     def __init__(self):
         super(Controller, self).__init__()
-        print ('start')
         self.recvThread1 = QThread()
         self.recvObj1 = Receiver()
         self.recvObj1.moveToThread(self.recvThread1)
         self.appStart.connect(self.recvObj1.recvMsg)
-        self.GUI_thread = QThread()
- #       self.sendThread  QThread()
- #       self.sendObj = Sender()
- #       self.sendObj.moveToThread(self.sendThread)
-        self.cmd1.connect(self.recvObj1.sendMsg) ## not connected???
+#        self.cmd1.connect(self.recvObj1.sendMsg) ## not connected???
         self.recvObj1.newdata.connect(self.append_data)
  #       self.user_update_table.connect(m.update_user)
-        self.start()
+ #       self.start()
 
     @pyqtSlot()
     def start(self):
+        print ("start")
         self.recvThread1.start()
         self.appStart.emit(self.host)
 
     @pyqtSlot(str)
     def append_data(self, data):
+        print (data)
         self.count +=1
         self.data_l.append(data)
         temp = data.split()

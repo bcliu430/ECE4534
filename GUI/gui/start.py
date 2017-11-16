@@ -20,8 +20,6 @@ class Start(QWidget):
         self.user_loc.connect(self.c.user_loc)
         self.direction.connect(self.c.user_dir)
 
-        self.ctl_thread = QThread()
-        self.c.moveToThread(self.ctl_thread)
 
         self.hbox = QHBoxLayout()
         self.hbox.addWidget(self.view)
@@ -92,7 +90,7 @@ class Start(QWidget):
     @pyqtSlot()
     def start_slot(self):
         print("start pressed")
-        self.ctl_thread.run()
+        self.c.start()
 
     @pyqtSlot()
     def enter1_text(self):
