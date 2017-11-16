@@ -21,6 +21,7 @@ class MainWindow(QWidget):
         vbox.addLayout(self.debug_box)
         vbox.addLayout(self.us_box)
         self.setLayout(vbox)
+#        self.ctl.user_coor_sig.connect(self.start_widget.view.update_grid)
         self.ctl.user_coor_sig.connect(self.new_coor_user)
         self.main()
 
@@ -68,6 +69,7 @@ class MainWindow(QWidget):
 
     def Start(self):
         self.start_widget = start(self.ctl)
+#        self.ctl.user_coor_sig.connect(self.start_widget.view.update_grid)
         self.back = QPushButton("Back")
         self.back.setMaximumWidth(100)
         self.start_box.addWidget(self.start_widget)
