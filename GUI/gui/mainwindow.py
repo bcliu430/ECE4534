@@ -3,10 +3,11 @@ import json
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from start import Start
+from start import start
 from Controller import Controller
 
 class MainWindow(QWidget):
+    ctl = Controller()
     def __init__(self):
         super(MainWindow, self).__init__()
         self.main_box  = QVBoxLayout()
@@ -20,7 +21,7 @@ class MainWindow(QWidget):
         vbox.addLayout(self.debug_box)
         vbox.addLayout(self.us_box)
         self.setLayout(vbox)
-
+        self.ctl.user_coor_sig.connect(self.new_coor_user)
         self.main()
 
     def main(self):
@@ -66,7 +67,7 @@ class MainWindow(QWidget):
         self.Us()
 
     def Start(self):
-        self.start_widget = Start()
+        self.start_widget = start(self.ctl)
         self.back = QPushButton("Back")
         self.back.setMaximumWidth(100)
         self.start_box.addWidget(self.start_widget)
@@ -105,10 +106,15 @@ class MainWindow(QWidget):
         self.stop.clicked.connect(lambda: self.Debug_func(False))
         self.back.clicked.connect(self.back_to_main_debug)
 
+    @pyqtSlot(str)
+    def new_coor_user(self, data):
+        print ("data: "+data)
+
     @pyqtSlot(list)
     def update_user(self, data):
-            for i in range (1,11):
-                self.tableWidget.setItem(i,0, QTableWidgetItem(data[i]))
+        print ("called")
+        for i in range (1,11):
+            self.tableWidget.setItem(i,0, QTableWidgetItem(data[i]))
 
     @pyqtSlot(list)
     def update_AI(self, data):

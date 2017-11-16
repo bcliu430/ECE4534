@@ -4,19 +4,18 @@ from PyQt5.QtWidgets import *
 from Arena import Arena
 from Controller import Controller
 
-class Start(QWidget):
+class start(QWidget):
     user_loc = pyqtSignal(str)
     AI_loc = pyqtSignal(str)
     direction = pyqtSignal(str)
     start = pyqtSignal()
-    c = Controller()
-    def __init__(self):
-        super(Start,self).__init__()
+    def __init__(self, controller):
+        super(start,self).__init__()
         self.coor_box = QGridLayout()
         self.dir_box =  QGridLayout()
- 
-        self.view = Arena()
 
+        self.view = Arena()
+        self.c = controller
         self.user_loc.connect(self.c.user_loc)
         self.direction.connect(self.c.user_dir)
 

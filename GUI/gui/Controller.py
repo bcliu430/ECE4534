@@ -10,7 +10,8 @@ class Controller(QObject):
     coor = Coor()
     appStart = pyqtSignal(str)
     cmd1 = pyqtSignal(str)
-    user_update_table = pyqtSignal(list)
+    user_coor_sig = pyqtSignal(str)
+
     host = '192.168.0.16'
     port = 2000
     count = 0
@@ -24,10 +25,7 @@ class Controller(QObject):
         self.recvObj1 = Receiver()
         self.recvObj1.moveToThread(self.recvThread1)
         self.appStart.connect(self.recvObj1.recvMsg)
-#        self.cmd1.connect(self.recvObj1.sendMsg) ## not connected???
         self.recvObj1.newdata.connect(self.append_data)
- #       self.user_update_table.connect(m.update_user)
- #       self.start()
 
     @pyqtSlot()
     def start(self):
@@ -39,21 +37,16 @@ class Controller(QObject):
     def append_data(self, data):
         print (data)
         self.count +=1
-        self.data_l.append(data)
         temp = data.split()
 
-
-#        for i in range(0, int(temp[0])):
         if 'P' in temp:
             print('hit joint')       
 #               get user input/ AI next coordinate here
 #               get this part working
             new_coor = self.coor.getNewCoor(self.user_coor, self.user_dire) 
-#                self.cmd1.emit(self.dire)
             self.user_coor_list.append(new_coor)
+            self.user_coor_sig.emit(str(new_coor[0]) + ' '+ str(new_coor[1])) ## not work
             print(self.user_coor_list) 
-#        if (len(data_l) == 10):
-#            self.user_update_table.emit(data_l)
 #        print('Controller: '+data)
 
     @pyqtSlot(str)
