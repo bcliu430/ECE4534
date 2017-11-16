@@ -10,7 +10,7 @@ class Controller(QObject):
     coor = Coor()
     appStart = pyqtSignal(str)
     cmd1 = pyqtSignal(str)
-    user_coor_sig = pyqtSignal(str)
+    user_coor_sig = pyqtSignal(str, str)
 
     host = '192.168.0.16'
     port = 2000
@@ -45,7 +45,7 @@ class Controller(QObject):
 #               get this part working
             new_coor = self.coor.getNewCoor(self.user_coor, self.user_dire) 
             self.user_coor_list.append(new_coor)
-            self.user_coor_sig.emit(str(new_coor[0]) + ' '+ str(new_coor[1])) ## not work
+            self.user_coor_sig.emit(str(new_coor[0]) + ' '+ str(new_coor[1]), '0 0') ## not work
             print(self.user_coor_list) 
 #        print('Controller: '+data)
 

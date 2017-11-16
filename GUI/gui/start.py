@@ -18,8 +18,7 @@ class start(QWidget):
         self.c = controller
         self.user_loc.connect(self.c.user_loc)
         self.direction.connect(self.c.user_dir)
-
-
+        self.c.user_coor_sig.connect(self.view.update_grid)
         self.hbox = QHBoxLayout()
         self.hbox.addWidget(self.view)
         self.vbox = QVBoxLayout()
