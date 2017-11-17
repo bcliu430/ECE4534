@@ -8,6 +8,8 @@ from Controller import Controller
 
 class MainWindow(QWidget):
     ctl = Controller()
+    key_press_signal = pyqtSignal(str)
+    host = '192.168.0.16'
     def __init__(self):
         super(MainWindow, self).__init__()
         self.main_box  = QVBoxLayout()
@@ -21,10 +23,17 @@ class MainWindow(QWidget):
         vbox.addLayout(self.debug_box)
         vbox.addLayout(self.us_box)
         self.setLayout(vbox)
+        self.key_press_signal.connect(self.ctl.recvObj1.recvMsg)
 #        self.ctl.user_coor_sig.connect(self.start_widget.
 #        view.update_grid)
 #        self.ctl.user_coor_sig.connect(self.new_coor_user)
         self.main()
+
+    def keyPressEvent(self, event):
+        # print("press any key")
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            self.key_press_signal.emit(self.host)
+            print("enter")
 
     def main(self):
         w = QWidget()
