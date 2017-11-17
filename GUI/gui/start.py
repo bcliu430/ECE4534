@@ -2,12 +2,13 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from Arena import Arena
+from tron import Direction
 from Controller import Controller
 
 class start(QWidget):
     user_loc = pyqtSignal(str)
     AI_loc = pyqtSignal(str)
-    direction = pyqtSignal(str)
+    direction = pyqtSignal(Direction)
     start = pyqtSignal()
     def __init__(self, controller):
         super(start,self).__init__()
@@ -94,7 +95,7 @@ class start(QWidget):
     def enter1_text(self):
         co = self.u_coor.text()
         d = self.u_dire.text()
-        self.user_loc.emit(co+d)
+        self.user_loc.emit(co+' '+d)
 
     @pyqtSlot()
     def enter2_text(self):
@@ -105,20 +106,20 @@ class start(QWidget):
 
     @pyqtSlot()
     def on_left(self):
-        print('W')
-        self.direction.emit('W')
+        # print('W')
+        self.direction.emit(Direction.left)
 
     @pyqtSlot()
     def on_up(self):
-        print('N')
-        self.direction.emit('N')
+        # print('N')
+        self.direction.emit(Direction.up)
         
     @pyqtSlot()
     def on_bottom(self):
-        print('S')
-        self.direction.emit('S')
+        # print('S')
+        self.direction.emit(Direction.down)
 
     @pyqtSlot()
     def on_right(self):
-        print('E')
-        self.direction.emit('E')
+        # print('E')
+        self.direction.emit(Direction.right)
