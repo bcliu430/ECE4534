@@ -27,7 +27,7 @@ class Receiver(QObject):
             print('ok')
             data = '1 P f'
             self.newdata.emit(data)
-            time.sleep(0.1)
+            time.sleep(1)
 
 
 '''

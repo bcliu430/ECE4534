@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 class Arena(QWidget):
     def __init__(self):
         super(Arena,self).__init__()
-
+        self.multipler = 1
         self.hbox = QHBoxLayout()
         # self.setFixedSize(QRect(20, 40, 601, 501))
         self.scene = QGraphicsScene()
@@ -40,8 +40,7 @@ class Arena(QWidget):
         curr = curr.split()
         new = new.split()
         print(curr, new)
-
-        multipler = 1
+        multipler = self.multipler
 
         line = QGraphicsLineItem(float(curr[0]*multipler), float(curr[1]*multipler),
                                  float(new[0]*multipler), float(new[1])*multipler)
@@ -51,3 +50,16 @@ class Arena(QWidget):
         self.item = line
         self.draw(self.item)
 
+    @pyqtSlot(str, str)
+    def update_ai_grid(self, new, curr):
+        curr = curr.split()
+        new = new.split()
+
+        multipler = self.multipler
+        line = QGraphicsLineItem(float(curr[0] * multipler), float(curr[1] * multipler),
+                                 float(new[0] * multipler), float(new[1]) * multipler)
+        pen = QPen()
+        pen.setColor(Qt.green)
+        line.setPen(pen)
+        self.item = line
+        self.draw(self.item)

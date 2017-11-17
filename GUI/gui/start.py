@@ -7,7 +7,7 @@ from Controller import Controller
 
 class start(QWidget):
     user_loc = pyqtSignal(str)
-    AI_loc = pyqtSignal(str)
+    ai_loc = pyqtSignal(str)
     direction = pyqtSignal(Direction)
     start = pyqtSignal()
     def __init__(self, controller):
@@ -17,9 +17,11 @@ class start(QWidget):
 
         self.view = Arena()
         self.c = controller
-        self.user_loc.connect(self.c.user_loc)
+        self.user_loc.connect(self.c.user_loc_init)
+        self.ai_loc.connect(self.c.ai_loc_init)
         self.direction.connect(self.c.user_dir)
         self.c.user_coor_sig.connect(self.view.update_grid)
+        self.c.ai_coor_sig.connect(self.view.update_ai_grid)
         self.hbox = QHBoxLayout()
         self.hbox.addWidget(self.view)
         self.vbox = QVBoxLayout()
@@ -101,8 +103,8 @@ class start(QWidget):
     def enter2_text(self):
         co = self.a_coor.text()
         d = self.a_dire.text()
-        
-        print (co, d)
+        self.ai_loc.emit(co+' '+d)
+        # print (co, d)
 
     @pyqtSlot()
     def on_left(self):

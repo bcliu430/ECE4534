@@ -10,7 +10,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/gui$main.coverage" NAME="main Coverage Results" MODIFIED="1510934164953" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/gui$main.coverage" NAME="main Coverage Results" MODIFIED="1510938142754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileColors">
     <fileColor scope="Non-Project Files (Material Default)" color="2E3C43" />
@@ -25,8 +25,8 @@
           <file leaf-file-name="Arena.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/Arena.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="425">
-                  <caret line="43" column="21" lean-forward="false" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+                <state relative-caret-position="77">
+                  <caret line="7" column="26" lean-forward="false" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
                   <folding>
                     <element signature="e#0#25#0" expanded="true" />
                   </folding>
@@ -34,11 +34,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Controller.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Controller.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Controller.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="350">
-                  <caret line="91" column="27" lean-forward="false" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
+                <state relative-caret-position="190">
+                  <caret line="60" column="34" lean-forward="false" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
                   <folding>
                     <element signature="e#25#52#0" expanded="true" />
                   </folding>
@@ -49,8 +49,8 @@
           <file leaf-file-name="tron.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tron.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="150">
-                  <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+                <state relative-caret-position="206">
+                  <caret line="245" column="0" lean-forward="false" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -70,11 +70,21 @@
             <entry file="file://$PROJECT_DIR$/start.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="304">
-                  <caret line="21" column="54" lean-forward="false" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
+                  <caret line="93" column="17" lean-forward="false" selection-start-line="93" selection-start-column="17" selection-end-line="93" selection-end-column="17" />
                   <folding>
                     <element signature="e#0#25#0" expanded="true" />
-                    <marker date="1510931926565" expanded="true" signature="3791:4004" ph="..." />
+                    <marker date="1510936769051" expanded="true" signature="3933:4146" ph="..." />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="client.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/client.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -91,10 +101,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="receiver.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="receiver.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/receiver.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="60">
+                <state relative-caret-position="-33">
                   <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
@@ -106,8 +116,8 @@
           <file leaf-file-name="receiver_fake.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/receiver_fake.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="540">
-                  <caret line="36" column="3" lean-forward="false" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
+                <state relative-caret-position="429">
+                  <caret line="29" column="24" lean-forward="false" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
                   </folding>
@@ -122,8 +132,8 @@
           <file leaf-file-name="tron.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tron.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="11">
-                  <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="133" selection-end-column="20" />
+                <state relative-caret-position="-2242">
+                  <caret line="12" column="11" lean-forward="true" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
                   <folding />
                 </state>
               </provider>
@@ -138,24 +148,27 @@
       <find>main</find>
       <find>connect</find>
       <find>Arena</find>
-      <find>user_coor_sig</find>
       <find>user_loc</find>
       <find>emit</find>
       <find>direction</find>
       <find>user_dir</find>
+      <find>user_coor_sig</find>
+      <find>ai_coor_sig</find>
+      <find>start</find>
+      <find>user hit</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/mainwindow.py" />
-        <option value="$PROJECT_DIR$/tron.py" />
         <option value="$PROJECT_DIR$/getCoor.py" />
-        <option value="$PROJECT_DIR$/start.py" />
-        <option value="$PROJECT_DIR$/Controller.py" />
-        <option value="$PROJECT_DIR$/Arena.py" />
-        <option value="$PROJECT_DIR$/receiver_fake.py" />
         <option value="$PROJECT_DIR$/receiver.py" />
+        <option value="$PROJECT_DIR$/start.py" />
+        <option value="$PROJECT_DIR$/receiver_fake.py" />
+        <option value="$PROJECT_DIR$/tron.py" />
+        <option value="$PROJECT_DIR$/Arena.py" />
+        <option value="$PROJECT_DIR$/Controller.py" />
       </list>
     </option>
   </component>
@@ -327,7 +340,7 @@
           <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="17" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
-            <marker date="1510931926565" expanded="true" signature="3791:4004" ph="..." />
+            <marker date="1510936769051" expanded="true" signature="3933:4146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -414,7 +427,7 @@
           <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
-            <marker date="1510931926565" expanded="true" signature="3791:4004" ph="..." />
+            <marker date="1510936769051" expanded="true" signature="3933:4146" ph="..." />
           </folding>
         </state>
       </provider>
@@ -473,32 +486,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding>
-            <element signature="e#20#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/getCoor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tron.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.2/python_stubs/776880377/PyQt5/QtWidgets/QGraphicsScene.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="214">
@@ -515,22 +502,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Controller.py">
+    <entry file="file://$PROJECT_DIR$/receiver_fake.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="91" column="27" lean-forward="false" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
+        <state relative-caret-position="429">
+          <caret line="29" column="24" lean-forward="false" selection-start-line="29" selection-start-column="24" selection-end-line="29" selection-end-column="24" />
           <folding>
-            <element signature="e#25#52#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Arena.py">
+    <entry file="file://$PROJECT_DIR$/getCoor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="43" column="21" lean-forward="false" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+        <state relative-caret-position="120">
+          <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/receiver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-33">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="e#20#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -538,30 +543,46 @@
     <entry file="file://$PROJECT_DIR$/start.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
-          <caret line="21" column="54" lean-forward="false" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
+          <caret line="93" column="17" lean-forward="false" selection-start-line="93" selection-start-column="17" selection-end-line="93" selection-end-column="17" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
-            <marker date="1510931926565" expanded="true" signature="3791:4004" ph="..." />
+            <marker date="1510936769051" expanded="true" signature="3933:4146" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/receiver_fake.py">
+    <entry file="file://$PROJECT_DIR$/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="3" lean-forward="false" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tron.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="245" column="0" lean-forward="false" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Arena.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="7" column="26" lean-forward="false" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/receiver.py">
+    <entry file="file://$PROJECT_DIR$/Controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state relative-caret-position="190">
+          <caret line="60" column="34" lean-forward="false" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#25#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
