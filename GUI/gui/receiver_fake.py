@@ -1,5 +1,5 @@
 import socket
-from PyQt5.QtCore import QObject, pyqtSlot, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSlot, pyqtSignal, Qt
 from enum import Enum
 from bitstring import BitArray
 
@@ -21,9 +21,12 @@ class Receiver(QObject):
 
     @pyqtSlot(str)
     def recvMsg(self, host):
+
         print ('ok')
         data = '1 P f'
         self.newdata.emit(data)
+
+
 
 '''
 TODO: 1. emit a signal to send the debug data to GUI
