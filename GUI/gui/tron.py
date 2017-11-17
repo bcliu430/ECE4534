@@ -11,7 +11,7 @@ except:
 
 width = 40
 height = 40
-# board = Tkinter.Tk()
+board = Tkinter.Tk()
 
 
 class Direction(Enum):

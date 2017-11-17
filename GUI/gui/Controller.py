@@ -96,9 +96,12 @@ class Controller(QObject):
             old_x = self.ai.trace[-1].x * self.multipler
             old_y = self.ai.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.ai_dire, 1)
-            self.ai_dire = attack_predict(self.ai, self.user)
+
             self.ai.add_trace(int(x/self.multipler), int(y/self.multipler))
             self.ai_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
+            self.ai_dire = attack_predict(self.ai, self.user)
+            map, hit = visualize_map(self.user.trace, self.ai.trace)
+            print(map)
 
     @pyqtSlot(str)
     def user_loc_init(self, msg):
