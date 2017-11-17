@@ -20,7 +20,7 @@ class Controller(QObject):
     port = 2000
     count = 0
     data_l = []
-    multipler = 5
+    multipler = 10
     # width = 30
     # height = 20
 
@@ -51,6 +51,9 @@ class Controller(QObject):
             x = self.ai.trace[-1].x
             y = self.ai.trace[-1].y
 
+        x = x * self.multipler
+        y = y * self.multipler
+
         if direction == Direction.up:
             y = y - self.multipler
         elif direction == Direction.down:
@@ -76,10 +79,10 @@ class Controller(QObject):
 
         if 'P' in temp:
             print('user hit joint')
-            old_x = self.user.trace[-1].x
-            old_y = self.user.trace[-1].y
+            old_x = self.user.trace[-1].x * self.multipler
+            old_y = self.user.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.user_dire, 0)
-            self.user.add_trace(x, y)
+            self.user.add_trace(int(x/self.multipler), int(y/self.multipler))
             self.user_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
 
     @pyqtSlot(str)
@@ -90,11 +93,11 @@ class Controller(QObject):
 
         if 'P' in temp:
             print('ai hit joint')
-            old_x = self.ai.trace[-1].x
-            old_y = self.ai.trace[-1].y
+            old_x = self.ai.trace[-1].x * self.multipler
+            old_y = self.ai.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.ai_dire, 1)
             self.ai_dire = attack_predict(self.ai, self.user)
-            self.ai.add_trace(x, y)
+            self.ai.add_trace(int(x/self.multipler), int(y/self.multipler))
             self.ai_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
 
     @pyqtSlot(str)
