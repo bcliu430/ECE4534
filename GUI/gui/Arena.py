@@ -9,16 +9,16 @@ class Arena(QWidget):
         self.hbox = QHBoxLayout()
         # self.setFixedSize(QRect(20, 40, 601, 501))
         self.scene = QGraphicsScene()
-        self.scene.setSceneRect(0, 0, 400, 400)
+        self.scene.setSceneRect(-20, -20, 340, 220)
         self.view = QGraphicsView()
         self.view.setScene(self.scene)
         self.hbox.addWidget(self.view)
         self.setLayout(self.hbox)
 
-        line = QGraphicsLineItem(0.0, 0.0, 400.0, 0.0)
-        line1 = QGraphicsLineItem(400, 0.0, 400.0, 400)
-        line2 = QGraphicsLineItem(400, 400, 0, 400)
-        line3 = QGraphicsLineItem(0, 400.0, 0, 0)
+        line = QGraphicsLineItem(-20, -20, 340, -20)
+        line1 = QGraphicsLineItem(340, -20, 340, 220)
+        line2 = QGraphicsLineItem(340, 220, -20, 220)
+        line3 = QGraphicsLineItem(-20, 220, -20, -20)
 
         pen = QPen()
         pen.setColor(Qt.lightGray)
@@ -31,6 +31,16 @@ class Arena(QWidget):
         self.draw(line1)
         self.draw(line2)
         self.draw(line3)
+
+        for i in range(0, 320, 20):
+            linex = QGraphicsLineItem(i, 0, i, 180)
+            linex.setPen(pen)
+            self.draw(linex)
+
+        for i in range(0, 200, 20):
+            linex = QGraphicsLineItem(0, i, 300, i)
+            linex.setPen(pen)
+            self.draw(linex)
 
     def draw(self, item):
         self.scene.addItem(item);
@@ -46,6 +56,7 @@ class Arena(QWidget):
                                  float(new[0]*multipler), float(new[1])*multipler)
         pen = QPen()
         pen.setColor(Qt.red)
+        pen.setWidth(5)
         line.setPen(pen)
         self.item = line
         self.draw(self.item)
@@ -60,6 +71,7 @@ class Arena(QWidget):
                                  float(new[0] * multipler), float(new[1]) * multipler)
         pen = QPen()
         pen.setColor(Qt.green)
+        pen.setWidth(5)
         line.setPen(pen)
         self.item = line
         self.draw(self.item)

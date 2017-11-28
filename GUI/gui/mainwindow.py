@@ -23,7 +23,7 @@ class MainWindow(QWidget):
         vbox.addLayout(self.debug_box)
         vbox.addLayout(self.us_box)
         self.setLayout(vbox)
-        self.key_press_signal.connect(self.ctl.recvObj1.recvMsg)
+#        self.key_press_signal.connect(self.ctl.recvObj1.recvMsg)
 #        self.ctl.user_coor_sig.connect(self.start_widget.
 #        view.update_grid)
 #        self.ctl.user_coor_sig.connect(self.new_coor_user)
@@ -215,13 +215,15 @@ class MainWindow(QWidget):
             if widget is not None: 
                 # widget will be None if the item is a layout
                 widget.deleteLater()
+'''
 def run():
 
     app = QApplication(sys.argv)
     w = MainWindow()
-    w.resize(1200, 450)
+    w.resize(900, 450)
     w.show()
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
     run()
+'''

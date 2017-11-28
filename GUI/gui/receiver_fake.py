@@ -23,11 +23,12 @@ class Receiver(QObject):
 
     @pyqtSlot(str)
     def recvMsg(self, host):
+        print( host)
         while True:
-            print('ok')
+#            print('ok')
             data = '1 P f'
             self.newdata.emit(data)
-            time.sleep(0.3)
+            time.sleep(1)
 
 
 '''

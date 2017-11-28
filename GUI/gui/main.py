@@ -9,7 +9,7 @@ def run():
 
     app = QApplication(sys.argv)
     w = MainWindow()
-    w.resize(1200, 450)
+    w.resize(900, 400)
     w.show()
     sys.exit(app.exec_())
 
