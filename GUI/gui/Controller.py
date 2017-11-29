@@ -96,7 +96,7 @@ class Controller(QObject):
             old_x = self.user.trace[-1].x * self.multipler
             old_y = self.user.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.user_dire, 0)
-            emit('left')
+            self.send_user.emit('left')
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
             self.user_l.append([x/self.multipler, y/self.multipler])
             if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
@@ -124,7 +124,7 @@ class Controller(QObject):
             old_x = self.ai.trace[-1].x * self.multipler
             old_y = self.ai.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.ai_dire, 1)
-            emit('right')
+            self.send_ai.emit('right')
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
             self.ai_l.append([coordinatex, coordinatey])
             if ([coordinatex, coordinatey] in self.user_l) or ([coordinatex, coordinatey] in self.ai_l[:-1])  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:

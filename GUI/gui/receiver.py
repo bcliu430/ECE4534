@@ -64,6 +64,7 @@ class Receiver(QObject):
 
     @pyqtSlot(str)
     def sendMsg(self, msg):
+        print( '======send=====')
         if msg == 'left':
             for b in MSG.Left:
                 self.s.send(b)
