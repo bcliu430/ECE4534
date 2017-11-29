@@ -105,11 +105,6 @@ class start(QWidget):
         self.enter1.setDisabled(True)
         self.u_coor.setDisabled(True)
         self.u_dire.setDisabled(True)
-        qp = QPainter()
-        qp.begin()
-        qp.setPen(Qt.red)
-        qp.drawPoint(int(co.split()[0])*20, int(co.split()[1])*20)
-        qp.end()
 
     @pyqtSlot()
     def enter2_text(self):
