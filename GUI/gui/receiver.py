@@ -4,10 +4,9 @@ from enum import Enum
 
 
 class MSG(Enum):
-    North = [b'\xff', b'\x01', b'\x57', b'\x4e', b'\xfe']
-    South = [b'\xff', b'\x01', b'\x57', b'\x53', b'\xfe']
-    West = [b'\xff', b'\x01', b'\x57', b'\x57', b'\xfe']
-    East = [b'\xff', b'\x01', b'\x57', b'\x45', b'\xfe']
+    Left = [b'\xff', b'\x01', b'\x57', b'\x4c', b'\xfe']
+    Str = [b'\xff', b'\x01', b'\x57', b'\x55', b'\xfe']
+    Right = [b'\xff', b'\x01', b'\x57', b'\x52', b'\xfe']
 
 
 class STATE(Enum):

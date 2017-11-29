@@ -8,8 +8,6 @@ from Controller import Controller
 
 class MainWindow(QWidget):
     ctl = Controller()
-    key_press_signal = pyqtSignal(str)
-    host = '192.168.0.16'
     def __init__(self):
         super(MainWindow, self).__init__()
         self.main_box  = QVBoxLayout()
@@ -23,17 +21,19 @@ class MainWindow(QWidget):
         vbox.addLayout(self.debug_box)
         vbox.addLayout(self.us_box)
         self.setLayout(vbox)
+        self.ctl.cmd1.connect(self.update_user)
+        self.ctl.cmd2.connect(self.update_AI)
+        self.tableWidget = QTableWidget()
+        self.tableWidget.setRowCount(11)
+        self.tableWidget.setColumnCount(2) 
+        self.tableWidget.setItem(0,0, QTableWidgetItem("User"))
+        self.tableWidget.setItem(0,1, QTableWidgetItem("AI"))
+ 
 #        self.key_press_signal.connect(self.ctl.recvObj1.recvMsg)
 #        self.ctl.user_coor_sig.connect(self.start_widget.
 #        view.update_grid)
 #        self.ctl.user_coor_sig.connect(self.new_coor_user)
         self.main()
-
-    def keyPressEvent(self, event):
-        # print("press any key")
-        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
-            self.key_press_signal.emit(self.host)
-            print("enter")
 
     def main(self):
         w = QWidget()
@@ -65,10 +65,6 @@ class MainWindow(QWidget):
         self.remove_first_view()
         self.Start()
 
-    def main_help(self):
-        self.remove_first_view()
-        self.Help()
-
     def main_debug(self):
         self.remove_first_view()
         self.Debug()
@@ -93,12 +89,7 @@ class MainWindow(QWidget):
 
     def Debug(self):
         width = 100
-        self.tableWidget = QTableWidget()
-        self.tableWidget.setRowCount(11)
-        self.tableWidget.setColumnCount(2) 
-        self.tableWidget.setItem(0,0, QTableWidgetItem("User"))
-        self.tableWidget.setItem(0,1, QTableWidgetItem("AI"))
-    
+   
         self.start = QPushButton("Start")
         self.stop = QPushButton("Stop")
         self.back = QPushButton("Back")
@@ -122,16 +113,22 @@ class MainWindow(QWidget):
     def new_coor_user(self, data):
         print ("data: "+data)
 
-    @pyqtSlot(list)
+    @pyqtSlot(str)
     def update_user(self, data):
         print ("called")
-        for i in range (1,11):
-            self.tableWidget.setItem(i,0, QTableWidgetItem(data[i]))
+        data = data.split('\n')
+        print (data)
+        for i in range (1,12):
+            self.tableWidget.setItem(int(i),0, QTableWidgetItem(str(data[i])))
 
-    @pyqtSlot(list)
+    @pyqtSlot(str)
     def update_AI(self, data):
-            for i in range (1,11):
-                self.tableWidget.setItem(i,1, QTableWidgetItem(data[i]))
+        print ("update ai table called")
+        data = data.split('\n')
+        print (data)
+        for i in range (1,12):
+            self.tableWidget.setItem(int(i),1, QTableWidgetItem(str(data[i])))
+
 
 
     def Debug_func(self,enable):

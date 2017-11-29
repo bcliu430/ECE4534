@@ -1,5 +1,5 @@
-# from receiver import *
-from receiver_fake import *
+from receiver import *
+## from receiver_fake import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from tron import *
@@ -12,13 +12,16 @@ import sys
 class Controller(QObject):
     start1 = pyqtSignal(str)
     start2 = pyqtSignal(str)
-    cmd1 = pyqtSignal(str)
+    cmd1 = pyqtSignal(str) ## update user table
+    cmd2 = pyqtSignal(str) ## update AI table
     user_coor_sig = pyqtSignal(str, str)
     ai_coor_sig = pyqtSignal(str, str)
     host1 = '192.168.0.16'
-    host2 = '192.168.0.18'
+    host2 = '192.168.0.20'
     port = 2000
     count = 0
+    data1 = []
+    data2 = []
     user_l = []
     ai_l = []
     multipler = 20
@@ -78,7 +81,11 @@ class Controller(QObject):
 #        print(data)
         self.count += 1
         temp = data.split()
-
+        self.data1.append(data)
+        if (len(self.data1) == 10):
+            tmp = '\n'.join(self.data1)
+            self.data1 = []
+            self.cmd1.emit(tmp)
         if 'P' in temp:
             print('user hit joint')
             ##print (self.user.trace[-1].x, self.user.trace[-1].y)
@@ -87,8 +94,6 @@ class Controller(QObject):
             x, y = self.get_new_coordinates(self.user_dire, 0)
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
             self.user_l.append([x/self.multipler, y/self.multipler])
-            print (self.user_l)
-            print (x, y)
             if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
                 if [coordinatex, coordinatey] == self.user_l[-1]:
                     print ('both lose')
@@ -102,16 +107,18 @@ class Controller(QObject):
 
     @pyqtSlot(str)
     def append_ai_data(self, data):
-        print(data)
         # self.count += 1
         temp = data.split()
-
+        self.data2.append(data)
+        if (len(self.data2) == 10):
+            tmp = '\n'.join(self.data2)
+            self.data2 = []
+            self.cmd2.emit(tmp)
         if 'P' in temp:
             print('ai hit joint')
             old_x = self.ai.trace[-1].x * self.multipler
             old_y = self.ai.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.ai_dire, 1)
-            print (self.ai_l)
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
             self.ai_l.append([coordinatex, coordinatey])
             if ([coordinatex, coordinatey] in self.user_l) or ([coordinatex, coordinatey] in self.ai_l[:-1])  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
