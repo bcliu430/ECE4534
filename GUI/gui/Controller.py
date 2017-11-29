@@ -14,6 +14,8 @@ class Controller(QObject):
     start2 = pyqtSignal(str)
     cmd1 = pyqtSignal(str) ## update user table
     cmd2 = pyqtSignal(str) ## update AI table
+    send_user = pyqtSignal(str)
+    send_ai   = pyqtSignal(str)
     user_coor_sig = pyqtSignal(str, str)
     ai_coor_sig = pyqtSignal(str, str)
     host1 = '192.168.0.16'
@@ -45,6 +47,8 @@ class Controller(QObject):
         self.start2.connect(self.recvObj2.recvMsg)
         self.recvObj1.newdata.connect(self.append_user_data)
         self.recvObj2.newdata.connect(self.append_ai_data)
+        self.send_user.connect(self.recvObj1.sendMsg)
+        self.send_ai.connect(self.recvObj2.sendMsg)
 
     # user 0 ai 1
     def get_new_coordinates(self, direction, user_or_ai):
@@ -92,6 +96,7 @@ class Controller(QObject):
             old_x = self.user.trace[-1].x * self.multipler
             old_y = self.user.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.user_dire, 0)
+            emit('left')
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
             self.user_l.append([x/self.multipler, y/self.multipler])
             if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
@@ -119,6 +124,7 @@ class Controller(QObject):
             old_x = self.ai.trace[-1].x * self.multipler
             old_y = self.ai.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.ai_dire, 1)
+            emit('right')
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
             self.ai_l.append([coordinatex, coordinatey])
             if ([coordinatex, coordinatey] in self.user_l) or ([coordinatex, coordinatey] in self.ai_l[:-1])  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
