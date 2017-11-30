@@ -110,14 +110,10 @@ class MainWindow(QWidget):
         self.back.clicked.connect(self.back_to_main_debug)
 
     @pyqtSlot(str)
-    def new_coor_user(self, data):
-        print ("data: "+data)
-
-    @pyqtSlot(str)
     def update_user(self, data):
         print ("called")
         data = data.split('\n')
-        print (data)
+##        print (data)
         for i in range (0,len(data)):
             self.tableWidget.setItem(int(i)+1,0, QTableWidgetItem(str(data[i])))
 
@@ -125,7 +121,7 @@ class MainWindow(QWidget):
     def update_AI(self, data):
         print ("update ai table called")
         data = data.split('\n')
-        print (data)
+##        print (data)
         for i in range (0,len(data)):
             self.tableWidget.setItem(int(i)+1,1, QTableWidgetItem(str(data[i])))
 

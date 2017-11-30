@@ -91,22 +91,26 @@ class Controller(QObject):
             self.data1 = []
             self.cmd1.emit(tmp)
         if 'P' in temp:
-            print('user hit joint')
+#            print('user hit joint')
             ##print (self.user.trace[-1].x, self.user.trace[-1].y)
             old_x = self.user.trace[-1].x * self.multipler
             old_y = self.user.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.user_dire, 0)
             self.send_user.emit('left') ## not work?
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
-            self.user_l.append([x/self.multipler, y/self.multipler])
+
             if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
                 if [coordinatex, coordinatey] == self.user_l[-1]:
                     print ('both lose')
-                print ('ai win')
+                else:
+                    print ('ai win')
                 self.recvThread1.terminate()
                 self.recvThread2.terminate()
             else:
-
+                self.user_l.append([x/self.multipler, y/self.multipler])
+                if (len(self.user_l) > 2):
+                    rover_direction = self.get_rover_direction(self.user_l[-3:])
+                    print(rover_direction)
                 self.user.add_trace(int(x/self.multipler), int(y/self.multipler))
                 self.user_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
 
@@ -120,21 +124,22 @@ class Controller(QObject):
             self.data2 = []
             self.cmd2.emit(tmp)
         if 'P' in temp:
-            print('ai hit joint')
+#            print('ai hit joint')
             old_x = self.ai.trace[-1].x * self.multipler
             old_y = self.ai.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.ai_dire, 1)
             self.send_ai.emit('right')
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
-            self.ai_l.append([coordinatex, coordinatey])
+
             if ([coordinatex, coordinatey] in self.user_l) or ([coordinatex, coordinatey] in self.ai_l[:-1])  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
                 if [coordinatex, coordinatey] == self.user_l[-1]:
                     print ('both lose')
-                print ('user win')
+                else:
+                    print ('user win')
                 self.recvThread1.terminate()
                 self.recvThread2.terminate()
             else:
-
+                self.ai_l.append([coordinatex, coordinatey])
                 self.ai.add_trace(int(coordinatex), int(coordinatey))
                 self.ai_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
                 self.ai_dire = attack_predict(self.ai, self.user)
@@ -146,7 +151,7 @@ class Controller(QObject):
         print(msg)
         msg = msg.split()
         self.user_dire = self.get_direction(msg[2])
-        self.user_l.append([msg[0], msg[1]])
+        self.user_l.append([int(msg[0]), int(msg[1])])
         self.user.add_trace(int(msg[0]), int(msg[1]))
         self.user.def_init_pos(int(msg[0]), int(msg[1]))
 
@@ -156,7 +161,7 @@ class Controller(QObject):
         msg = msg.split()
         self.ai_dire = self.get_direction(msg[2])
         # initialize ai starting direction
-        self.ai_l.append([msg[0], msg[1]])
+        self.ai_l.append([int(msg[0]), int(msg[1])])
         self.ai.add_trace(int(msg[0]), int(msg[1]))
         self.ai.def_init_pos(int(msg[0]), int(msg[1]))
 
@@ -175,6 +180,39 @@ class Controller(QObject):
         if direct == "right":
             return Direction.right
 
+    def get_rover_direction(self, data):
+        print (data)
+        first = data[0]
+        second = data[1]
+        third = data[2]
+        if (first[0] == second[0] == third[0]) or (first[1] == second[1] == third[1]):
+            return "straight"
+        else:
+            if (first[0] == second[0] and second[1] == third[1]): ## y direction
+                if(second[1] - first[1] < 0):
+                    if(third[0] - second[0] >0):
+                        return "right"
+                    else:
+                        
+                        return "left"
+                else:
+                    if(third[0] - second[0] >0):
+                        return "left"
+                    else:
+                        return "right"
+ 
+            if (first[1] == second[1] and second[0] == third[0]): ## x direction 
+                if(second[0] - first[0] < 0):
+                    if(third[1] - second[1] >0):
+                        return "left"
+                    else:
+                        return "right"
+                else:
+                    if(third[1] - second[1] >0):
+                        return "right"
+                    else:
+                        return "left"
+                
 '''
 if __name__ == "__main__":
     app = QCoreApplication([])

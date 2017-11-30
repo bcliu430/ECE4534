@@ -20,12 +20,14 @@ class STATE(Enum):
 
 class Receiver(QObject):
     newdata = pyqtSignal(str)
+    def __init__(self):
+        super(Receiver, self).__init__()
 
     @pyqtSlot(str)
     def recvMsg(self, host):
         print( host)
         while True:
-#            print('ok')
+            print('ok')
             data = '1 P f'
             self.newdata.emit(data)
             time.sleep(1)

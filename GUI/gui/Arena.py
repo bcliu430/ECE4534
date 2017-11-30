@@ -49,7 +49,7 @@ class Arena(QWidget):
     def update_grid(self, new, curr):
         curr = curr.split()
         new = new.split()
-        print(curr, new)
+##        print(curr, new)
         multipler = self.multipler
 
         line = QGraphicsLineItem(float(curr[0]*multipler), float(curr[1]*multipler),
