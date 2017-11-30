@@ -4,7 +4,7 @@ import serial
 from time import sleep
 
 
-dev='/dev/ttyUSB2'
+dev='/dev/ttyUSB1'
 baud=57600
 ssid='Team16_pi'
 s = serial.Serial(dev, baud, timeout=1)
@@ -34,18 +34,18 @@ def main():
             break
     print ('debug')
     while 1:
-#        print(get_reply(s))
+        print(get_reply(s))
         msg = [b'\xff', b'\x01', b'\x4c', b'\x00', b'\xfe']
         send_cmd(s, msg)
-        sleep(0.05)
+        sleep(3)
 
         msg = [b'\xff', b'\x02', b'\x4c', b'\x00', b'\x53', b'\x05', b'\xfe']
         send_cmd(s, msg)
-        sleep(0.05)
+        sleep(3)
 
         msg = [b'\xff', b'\x01', b'\x50', b'\x0f', b'\xfe']
         send_cmd(s, msg)
-        sleep(0.05)
+        sleep(3)
 
 
 
