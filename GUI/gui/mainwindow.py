@@ -118,16 +118,16 @@ class MainWindow(QWidget):
         print ("called")
         data = data.split('\n')
         print (data)
-        for i in range (1,12):
-            self.tableWidget.setItem(int(i),0, QTableWidgetItem(str(data[i])))
+        for i in range (0,len(data)):
+            self.tableWidget.setItem(int(i)+1,0, QTableWidgetItem(str(data[i])))
 
     @pyqtSlot(str)
     def update_AI(self, data):
         print ("update ai table called")
         data = data.split('\n')
         print (data)
-        for i in range (1,12):
-            self.tableWidget.setItem(int(i),1, QTableWidgetItem(str(data[i])))
+        for i in range (0,len(data)):
+            self.tableWidget.setItem(int(i)+1,1, QTableWidgetItem(str(data[i])))
 
 
 
