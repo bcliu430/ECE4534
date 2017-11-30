@@ -30,7 +30,10 @@ class Receiver(QObject):
             self.newdata.emit(data)
             time.sleep(1)
 
-
+    @pyqtSlot(str)
+    def sendMsg(self, msg):
+        print( '======send====='+ msg)
+ 
 '''
 TODO: 1. emit a signal to send the debug data to GUI
       2. Two state for Controller: 1 moving to a joint, 2 arrive a joint

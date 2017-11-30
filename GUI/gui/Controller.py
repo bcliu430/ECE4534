@@ -1,5 +1,5 @@
-from receiver import *
-## from receiver_fake import *
+##from receiver import *
+from receiver_fake import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from tron import *
@@ -96,7 +96,7 @@ class Controller(QObject):
             old_x = self.user.trace[-1].x * self.multipler
             old_y = self.user.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.user_dire, 0)
-            self.send_user.emit('left')
+            self.send_user.emit('left') ## not work?
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
             self.user_l.append([x/self.multipler, y/self.multipler])
             if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
