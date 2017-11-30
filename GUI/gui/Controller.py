@@ -47,8 +47,8 @@ class Controller(QObject):
         self.start2.connect(self.recvObj2.recvMsg)
         self.recvObj1.newdata.connect(self.append_user_data)
         self.recvObj2.newdata.connect(self.append_ai_data)
-        self.send_user.connect(self.recvObj1.sendMsg)
-        self.send_ai.connect(self.recvObj2.sendMsg)
+#        self.send_user.connect(self.recvObj1.sendMsg)
+#        self.send_ai.connect(self.recvObj2.sendMsg)
 
     # user 0 ai 1
     def get_new_coordinates(self, direction, user_or_ai):
@@ -96,10 +96,10 @@ class Controller(QObject):
             old_x = self.user.trace[-1].x * self.multipler
             old_y = self.user.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.user_dire, 0)
-            self.send_user.emit('left') ## not work?
+
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
 
-            if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
+            if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 15 or coordinatey >9:
                 if [coordinatex, coordinatey] == self.user_l[-1]:
                     print ('both lose')
                 else:
@@ -111,6 +111,7 @@ class Controller(QObject):
                 if (len(self.user_l) > 2):
                     rover_direction = self.get_rover_direction(self.user_l[-3:])
                     print(rover_direction)
+                    self.recvObj1.msg = rover_direction
                 self.user.add_trace(int(x/self.multipler), int(y/self.multipler))
                 self.user_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
 
@@ -131,7 +132,7 @@ class Controller(QObject):
             self.send_ai.emit('right')
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
 
-            if ([coordinatex, coordinatey] in self.user_l) or ([coordinatex, coordinatey] in self.ai_l[:-1])  or x < 0 or y < 0 or coordinatex > 16 or coordinatey >10:
+            if ([coordinatex, coordinatey] in self.user_l) or ([coordinatex, coordinatey] in self.ai_l[:-1])  or x < 0 or y < 0 or coordinatex > 15 or coordinatey >9:
                 if [coordinatex, coordinatey] == self.user_l[-1]:
                     print ('both lose')
                 else:
@@ -140,6 +141,10 @@ class Controller(QObject):
                 self.recvThread2.terminate()
             else:
                 self.ai_l.append([coordinatex, coordinatey])
+                if (len(self.user_l) > 2):
+                    rover_direction = self.get_rover_direction(self.user_l[-3:])
+                    print(rover_direction)
+                    self.recvObj2.msg = rover_direction
                 self.ai.add_trace(int(coordinatex), int(coordinatey))
                 self.ai_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
                 self.ai_dire = attack_predict(self.ai, self.user)

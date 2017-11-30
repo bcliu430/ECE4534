@@ -17,9 +17,9 @@ class STATE(Enum):
     DATATYPE = 2
     DATA = 3
 
-
 class Receiver(QObject):
     newdata = pyqtSignal(str)
+    msg = ''
     def __init__(self):
         super(Receiver, self).__init__()
 
@@ -31,11 +31,14 @@ class Receiver(QObject):
             data = '1 P f'
             self.newdata.emit(data)
             time.sleep(1)
+            if self.msg != '':
+                self.sendMsg ('test: ' + self.msg)
+                self.msg = ''
+                
 
-    @pyqtSlot(str)
     def sendMsg(self, msg):
         print( '======send====='+ msg)
- 
+
 '''
 TODO: 1. emit a signal to send the debug data to GUI
       2. Two state for Controller: 1 moving to a joint, 2 arrive a joint

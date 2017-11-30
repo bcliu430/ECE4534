@@ -18,11 +18,11 @@ class STATE(Enum):
 
 class Receiver(QObject):
     newdata = pyqtSignal(str)
-
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((host, 2000))
+   
     @pyqtSlot(str)
     def recvMsg(self, host):
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.connect((host, 2000))
         state = STATE.STARTBYTE
         data = []
         count = 0
@@ -62,7 +62,12 @@ class Receiver(QObject):
                         self.newdata.emit(data)
                         data = []
 
-    @pyqtSlot(str)
+        if self.msg != '':
+            print( self.msg)
+            sendMsg(self.msg)
+            self.msg = ''
+
+
     def sendMsg(self, msg):
         print( '======send=====')
         if msg == 'left':
