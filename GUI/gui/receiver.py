@@ -34,8 +34,7 @@ class Receiver(QObject):
             ##            print (state)
             ##            print (byte)
             if byte:
-                if (state == STATE.STARTBYTE):
-                    if byte == b'\xff':
+                if (state == STATE.STARTBYTE or byte == b'\xff'):
                         state = STATE.NUMBYTES
                         data.append(byte)
                 elif (state == STATE.NUMBYTES):
@@ -61,7 +60,7 @@ class Receiver(QObject):
                         data = ' '.join(data[1:-1])
                         data = data + '\n'
                         print('receiver: ' + data)
-                       self.newdata.emit(data)
+                        self.newdata.emit(data)
                         data = []
 
         if self.msg != '':

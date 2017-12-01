@@ -1,5 +1,5 @@
-##from receiver import *
-from receiver_fake import *
+from receiver import *
+##from receiver_fake import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from tron import *
@@ -37,8 +37,8 @@ class Controller(QObject):
         super(Controller, self).__init__()
         self.recvThread1 = QThread()
         self.recvThread2 = QThread()
-        self.recvObj1 = Receiver()
-        self.recvObj2 = Receiver()
+        self.recvObj1 = Receiver(self.host1)
+        self.recvObj2 = Receiver(self.host2)
         self.user_dire = Direction.up
         self.ai_dire = Direction.up
         self.recvObj1.moveToThread(self.recvThread1)
