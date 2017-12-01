@@ -43,7 +43,7 @@ class Receiver(QObject):
                     numbytes = byte
                     state = STATE.DATATYPE
                 elif (state == STATE.DATATYPE):
-                    data.append(byte.decode())
+                    data.append(str(byte))
                     state = STATE.DATA
                 elif (state == STATE.DATA):
                     byte = int.from_bytes(byte, byteorder='big')
