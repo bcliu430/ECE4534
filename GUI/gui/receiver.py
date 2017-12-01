@@ -18,11 +18,13 @@ class STATE(Enum):
 
 class Receiver(QObject):
     newdata = pyqtSignal(str)
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((host, 2000))
+    def __init__(self, host):
+        super(Receiver,self).__init__()
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.connect((host, 2000))
    
     @pyqtSlot(str)
-    def recvMsg(self, host):
+    def recvMsg(self):
         state = STATE.STARTBYTE
         data = []
         count = 0
@@ -59,7 +61,7 @@ class Receiver(QObject):
                         data = ' '.join(data[1:-1])
                         data = data + '\n'
                         print('receiver: ' + data)
-                        self.newdata.emit(data)
+                       self.newdata.emit(data)
                         data = []
 
         if self.msg != '':
