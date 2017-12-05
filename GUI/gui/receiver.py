@@ -61,8 +61,6 @@ class Receiver(QObject):
                                 pass
                             print(self.msg)
                             self.sendMsg(self.msg)
-                            self.sendMsg(self.msg)
-                            self.sendMsg(self.msg)
                             self.msg = ''
  
                         data = []
