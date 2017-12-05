@@ -16,16 +16,11 @@ class Receiver(QObject):
         super(Receiver,self).__init__()
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = host
-# #       self.s.connect((host, 2000))
+        self.s.connect((host, 2000))
 
     @pyqtSlot(str)
     def recvMsg(self):
-        while 1:
-            try:
-                self.connect((self.host, 2000))
-                break
-            except:
-                print('cannot connect to '+ self.host)
+#        self.s.connect((self.host, 2000))
         state = STATE.STARTBYTE
         data = []
         count = 0
