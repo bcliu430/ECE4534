@@ -9,8 +9,8 @@ try:
 except:
     import tkinter as Tkinter
 
-width = 16
-height = 10
+width = 6
+height = 4
 board = Tkinter.Tk()
 
 

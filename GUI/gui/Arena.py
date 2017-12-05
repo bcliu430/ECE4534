@@ -32,13 +32,13 @@ class Arena(QWidget):
         self.draw(line2)
         self.draw(line3)
 
-        for i in range(0, 320, 20):
-            linex = QGraphicsLineItem(i, 0, i, 180)
+        for i in range(0, 300, 50):
+            linex = QGraphicsLineItem(i, 0, i, 150)
             linex.setPen(pen)
             self.draw(linex)
 
-        for i in range(0, 200, 20):
-            linex = QGraphicsLineItem(0, i, 300, i)
+        for i in range(0, 200, 50):
+            linex = QGraphicsLineItem(0, i, 250, i)
             linex.setPen(pen)
             self.draw(linex)
 

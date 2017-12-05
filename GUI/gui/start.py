@@ -45,6 +45,7 @@ class start(QWidget):
         self.a_dire.setPlaceholderText('Direction')
         self.enter1 = QPushButton('Enter')
         self.enter2 = QPushButton('Enter')
+        self.straight = QPushButton('test')
 
         self.start = QPushButton("Start") #first box
         self.start.setMaximumWidth(300)
@@ -71,6 +72,8 @@ class start(QWidget):
         self.coor_box.addWidget(self.a_coor,2,1)
         self.coor_box.addWidget(self.a_dire,2,2)
         self.coor_box.addWidget(self.enter2,2,3)
+        self.coor_box.addWidget(self.straight,1,4)
+        
 
         self.dir_box.addWidget(self.left_btn, 1, 0)
         self.dir_box.addWidget(self.up_btn, 0, 1)
@@ -86,6 +89,7 @@ class start(QWidget):
         self.start.clicked.connect(self.start_slot)
         self.enter1.clicked.connect(self.enter1_text)
         self.enter2.clicked.connect(self.enter2_text)
+        self.straight.clicked.connect(self.c.straight)
 
         self.left_btn.clicked.connect(self.on_left)
         self.up_btn.clicked.connect(self.on_up)

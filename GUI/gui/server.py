@@ -28,19 +28,18 @@ count = b'\x00'
 
 recState = RECSTATE.STARTBYTE
 
-host = ''
+host = '192.168.0.20'
 port = 2000
 size = 1
 
 
 print("Running")
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-s.bind((host, port))
-s.listen()
+clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+#s.bind((host, port))
+#s.listen()
 ## Connect to Wifly
-clientsocket, address = s.accept()
-
+#clientsocket, address = s.accept()
+clientsocket.connect((host,port))
 print("Connected")
 
 master = Tk()
@@ -51,25 +50,26 @@ master.title("Message Send")
 
 def sendLeftTurn():
     ##TEST SEND BACK TO THE PIC CHECK WITH LA
-    clientsocket.send(b'\xff')
-    clientsocket.send(b'\x01')
-    clientsocket.send(b'W')
-    clientsocket.send(b'L') #turn left test message
-    clientsocket.send(b'\xfe')
-    
-    clientsocket.send(b'\xff')
-    clientsocket.send(b'\x01')
-    clientsocket.send(b'W')
-    clientsocket.send(b'L') #turn left test message
-    clientsocket.send(b'\xfe')
-    
-    clientsocket.send(b'\xff')
-    clientsocket.send(b'\x01')
-    clientsocket.send(b'W')
-    clientsocket.send(b'L') #turn left test message
-    clientsocket.send(b'\xfe')
-    
     print("SENT LEFT")
+    clientsocket.send(b'\xff')
+    clientsocket.send(b'\x01')
+    clientsocket.send(b'W')
+    clientsocket.send(b'L') #turn left test message
+    clientsocket.send(b'\xfe')
+'''    
+    clientsocket.send(b'\xff')
+    clientsocket.send(b'\x01')
+    clientsocket.send(b'W')
+    clientsocket.send(b'L') #turn left test message
+    clientsocket.send(b'\xfe')
+    
+    clientsocket.send(b'\xff')
+    clientsocket.send(b'\x01')
+    clientsocket.send(b'W')
+    clientsocket.send(b'L') #turn left test message
+    clientsocket.send(b'\xfe')
+'''    
+
     
 def sendRightTurn():
     clientsocket.send(b'\xff')
@@ -77,7 +77,7 @@ def sendRightTurn():
     clientsocket.send(b'W')
     clientsocket.send(b'R') #turn Right test message
     clientsocket.send(b'\xfe')
-    
+'''    
     clientsocket.send(b'\xff')
     clientsocket.send(b'\x01')
     clientsocket.send(b'W')
@@ -91,7 +91,7 @@ def sendRightTurn():
     clientsocket.send(b'\xfe')
     
     print("SENT RIGHT")
-    
+'''    
 def sendStraightTurn():
     clientsocket.send(b'\xff')
     clientsocket.send(b'\x01')

@@ -2,13 +2,6 @@ import socket
 from PyQt5.QtCore import QObject, pyqtSlot, pyqtSignal
 from enum import Enum
 
-
-class MSG(Enum):
-    Left = [b'\xff', b'\x01', b'\x57', b'\x4c', b'\xfe']
-    Str = [b'\xff', b'\x01', b'\x57', b'\x55', b'\xfe']
-    Right = [b'\xff', b'\x01', b'\x57', b'\x52', b'\xfe']
-
-
 class STATE(Enum):
     STARTBYTE = 0
     NUMBYTES = 1
@@ -18,25 +11,33 @@ class STATE(Enum):
 
 class Receiver(QObject):
     newdata = pyqtSignal(str)
+    msg = ''
     def __init__(self, host):
         super(Receiver,self).__init__()
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.s.connect((host, 2000))
-   
+        self.host = host
+# #       self.s.connect((host, 2000))
+
     @pyqtSlot(str)
     def recvMsg(self):
+        while 1:
+            try:
+                self.connect((self.host, 2000))
+                break
+            except:
+                print('cannot connect to '+ self.host)
         state = STATE.STARTBYTE
         data = []
         count = 0
         numbytes = 0
         while True:
+            self.s.send(b'\x00')
             byte = self.s.recv(1)
             ##            print (state)
-            ##            print (byte)
+        ##           print (byte)
             if byte:
                 if (state == STATE.STARTBYTE or byte == b'\xff'):
                         state = STATE.NUMBYTES
-                        data.append(byte)
                 elif (state == STATE.NUMBYTES):
                     byte = int.from_bytes(byte, byteorder='big')
                     data.append(str(byte))
@@ -52,34 +53,40 @@ class Receiver(QObject):
                     if (count < numbytes):
                         state = STATE.DATATYPE
                     else:
-                        data.append(b'\xfe')
-                        print('raw data')
-                        print(data)
+#                        print('raw data')
+#                        print(data)
                         count = 0
                         state = STATE.STARTBYTE
-                        data = ' '.join(data[1:-1])
+                        data = ' '.join(data)
                         data = data + '\n'
-                        print('receiver: ' + data)
                         self.newdata.emit(data)
+                        if ("b'P'" in data):
+                            print ('intersect')
+                            while self.msg == '':
+                                pass
+                            print(self.msg)
+                            self.sendMsg(self.msg)
+                            self.sendMsg(self.msg)
+                            self.sendMsg(self.msg)
+                            self.msg = ''
+ 
                         data = []
 
-        if self.msg != '':
-            print( self.msg)
-            sendMsg(self.msg)
-            self.msg = ''
-
-
     def sendMsg(self, msg):
-        print( '======send=====')
+        print( '======send=====' + msg)
         if msg == 'left':
-            for b in MSG.Left:
+            Left = [b'\xff', b'\x01', b'W', b'L', b'\xfe']
+            for b in Left:
+                print (b)
                 self.s.send(b)
         elif msg == 'straight':
-            for b in MSG.Str:
+            Str = [b'\xff', b'\x01', b'\x57', b'\x55', b'\xfe']
+            for b in Str:
                 self.s.send(b)
 
         if msg == 'right':
-            for b in MSG.Right:
+            Right = [b'\xff', b'\x01', b'\x57', b'\x52', b'\xfe']
+            for b in Right:
                 self.s.send(b)
 
 
