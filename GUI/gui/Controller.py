@@ -10,25 +10,23 @@ import sys
 # from mainwindow import MainWindow
 
 class Controller(QObject):
-    start1 = pyqtSignal(str)
-    start2 = pyqtSignal(str)
+    start1 = pyqtSignal()
+    start2 = pyqtSignal()
     cmd1 = pyqtSignal(str) ## update user table
     cmd2 = pyqtSignal(str) ## update AI table
     send_user = pyqtSignal(str)
     send_ai   = pyqtSignal(str)
     user_coor_sig = pyqtSignal(str, str)
     ai_coor_sig = pyqtSignal(str, str)
-    host1 = '192.168.0.16'
-    host2 = '192.168.0.20'
-    port = 2000
+#    host1 = '192.168.0.16'
+#    host2 = '192.168.0.20'
+#    port = 2000
     count = 0
     data1 = []
     data2 = []
     user_l = []
     ai_l = []
     multipler = 50
-    # width = 30
-    # height = 20
 
     user = Rover()
     ai = Rover()
@@ -37,8 +35,8 @@ class Controller(QObject):
         super(Controller, self).__init__()
         self.recvThread1 = QThread()
         self.recvThread2 = QThread()
-        self.recvObj1 = Receiver(self.host1)
-        self.recvObj2 = Receiver(self.host2)
+        self.recvObj1 = Receiver(2000)
+        self.recvObj2 = Receiver(3000)
         self.user_dire = Direction.up
         self.ai_dire = Direction.up
         self.recvObj1.moveToThread(self.recvThread1)
@@ -79,8 +77,8 @@ class Controller(QObject):
         print("start")
         self.recvThread1.start()
         self.recvThread2.start()
-        self.start1.emit(self.host1)
-        self.start2.emit(self.host2)
+        self.start1.emit()
+        self.start2.emit()
         self.recvObj1.sendMsg('straight')
         self.recvObj2.sendMsg('straight')
 

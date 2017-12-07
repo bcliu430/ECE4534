@@ -12,13 +12,23 @@ class STATE(Enum):
 class Receiver(QObject):
     newdata = pyqtSignal(str)
     msg = ''
-    def __init__(self, host):
+    soc = ''
+    s = ''
+    peter_flag = False
+    peter_count = 0
+    peter_msg = ''
+    def __init__(self, port):
         super(Receiver,self).__init__()
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.host = host
-        self.s.connect((host, 2000))
+        self.port = port
+        self.connect();
 
-    @pyqtSlot(str)
+    def connect(self):
+        self.soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.soc.bind(('',self.port))
+        self.soc.listen()
+        self.s, addr = self.soc.accept()
+
+    @pyqtSlot()
     def recvMsg(self):
 #        self.s.connect((self.host, 2000))
         state = STATE.STARTBYTE
@@ -26,7 +36,10 @@ class Receiver(QObject):
         count = 0
         numbytes = 0
         while True:
-            self.s.send(b'\x00')
+            try:
+                self.s.send(b'\x00')
+            except:
+                self.connect()
             byte = self.s.recv(1)
             ##            print (state)
         ##           print (byte)
@@ -55,18 +68,31 @@ class Receiver(QObject):
                         data = ' '.join(data)
                         data = data + '\n'
                         self.newdata.emit(data)
-                        if ("b'P'" in data):
-                            print ('intersect')
-                            while self.msg == '':
-                                pass
+#                        if ("b'P'" in data):
+#                            print ('intersect')
+                        if self.peter_flag and not "b'R'" in data:
+                            self.peter_count += 1
+                            if self.peter_count > 10:
+                                self.sendMsg(self.peter_msg)
+                                self.peter_count = 0
+                        else:
+                            self.peter_flag = False
+
+                        if not (self.msg == '') : 
                             print(self.msg)
                             self.sendMsg(self.msg)
+                            self.peter_flag = True
+                            self.peter_msg = self.msg
                             self.msg = ''
  
                         data = []
 
     def sendMsg(self, msg):
-        print( '======send=====' + msg)
+        if (self.port == 2000):
+            print( 'user: ======send=====' + msg)
+        if (self.port == 3000):
+            print( 'ai: ======send=====' + msg)
+
         if msg == 'left':
             Left = [b'\xff', b'\x01', b'W', b'L', b'\xfe']
             for b in Left:
