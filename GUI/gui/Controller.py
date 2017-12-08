@@ -1,5 +1,5 @@
-from receiver import *
-##from receiver_fake import *
+#from receiver import *
+from receiver_fake import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from tron import *
@@ -84,7 +84,7 @@ class Controller(QObject):
 
     @pyqtSlot(str)
     def append_user_data(self, data):
-#        print(data)
+        print(data)
         self.count += 1
         temp = data.split()
         self.data1.append(data)
@@ -93,7 +93,7 @@ class Controller(QObject):
             self.data1 = []
             self.cmd1.emit(tmp)
         if "b'P'" in temp:
-#            print('user hit joint')
+            print('user hit joint')
             ##print (self.user.trace[-1].x, self.user.trace[-1].y)
             old_x = self.user.trace[-1].x * self.multipler
             old_y = self.user.trace[-1].y * self.multipler
