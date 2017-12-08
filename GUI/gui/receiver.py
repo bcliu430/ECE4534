@@ -79,7 +79,6 @@ class Receiver(QObject):
                             self.peter_flag = False
 
                         if not (self.msg == '') : 
-                            print(self.msg)
                             self.sendMsg(self.msg)
                             self.peter_flag = True
                             self.peter_msg = self.msg
@@ -96,15 +95,14 @@ class Receiver(QObject):
         if msg == 'left':
             Left = [b'\xff', b'\x01', b'W', b'L', b'\xfe']
             for b in Left:
-                print (b)
                 self.s.send(b)
         elif msg == 'straight':
-            Str = [b'\xff', b'\x01', b'\x57', b'\x55', b'\xfe']
+            Str = [b'\xff', b'\x01', b'W', b'U', b'\xfe']
             for b in Str:
                 self.s.send(b)
 
         if msg == 'right':
-            Right = [b'\xff', b'\x01', b'\x57', b'\x52', b'\xfe']
+            Right = [b'\xff', b'\x01', b'W', b'R', b'\xfe']
             for b in Right:
                 self.s.send(b)
 
