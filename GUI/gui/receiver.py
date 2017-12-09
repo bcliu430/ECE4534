@@ -1,5 +1,5 @@
 import socket
-from PyQt5.QtCore import QObject, pyqtSlot, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSlot, pyqtSignal, QTimer
 from enum import Enum
 
 class STATE(Enum):
@@ -17,6 +17,8 @@ class Receiver(QObject):
     peter_flag = False
     peter_count = 0
     peter_msg = ''
+    peter_wait = 0
+
     def __init__(self, port):
         super(Receiver,self).__init__()
         self.port = port
@@ -70,20 +72,28 @@ class Receiver(QObject):
                         self.newdata.emit(data)
 #                        if ("b'P'" in data):
 #                            print ('intersect')
-                        if self.peter_flag and not "b'R'" in data:
-                            self.peter_count += 1
-                            if self.peter_count > 10:
-                                self.sendMsg(self.peter_msg)
-                                self.peter_count = 0
+                        if not "b'R'" in data:
+                            if self.peter_flag:
+                                self.peter_count += 1
+                                if self.peter_count > 10:
+                                    print('resend', self.port, self.peter_msg)
+                                    self.sendMsg(self.peter_msg)
+                                    self.peter_count = 0
                         else:
+                            print(self.port, 'received')
+                            self.peter_count = 0
                             self.peter_flag = False
 
-                        if not (self.msg == '') : 
-                            self.sendMsg(self.msg)
-                            self.peter_flag = True
-                            self.peter_msg = self.msg
-                            self.msg = ''
- 
+                        if not (self.msg == ''): 
+                            if "b'C'" in data and str(87) in data:
+                                if self.peter_wait <20:
+                                    self.peter_wait += 1
+                                else:
+                                    self.sendMsg(self.msg)
+                                    self.peter_flag = True
+                                    self.peter_msg = self.msg
+                                    self.msg = ''
+                                    self.peter_wait = 0
                         data = []
 
     def sendMsg(self, msg):
@@ -101,7 +111,7 @@ class Receiver(QObject):
             for b in Str:
                 self.s.send(b)
 
-        if msg == 'right':
+        elif msg == 'right':
             Right = [b'\xff', b'\x01', b'W', b'R', b'\xfe']
             for b in Right:
                 self.s.send(b)

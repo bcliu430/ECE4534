@@ -1,5 +1,5 @@
-#from receiver import *
-from receiver_fake import *
+from receiver import *
+#from receiver_fake import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from tron import *
@@ -84,7 +84,6 @@ class Controller(QObject):
 
     @pyqtSlot(str)
     def append_user_data(self, data):
-        print(data)
         self.count += 1
         temp = data.split()
         self.data1.append(data)
@@ -97,10 +96,9 @@ class Controller(QObject):
             ##print (self.user.trace[-1].x, self.user.trace[-1].y)
             old_x = self.user.trace[-1].x * self.multipler
             old_y = self.user.trace[-1].y * self.multipler
+            x_draw, y_draw = self.get_new_coordinates(self.user_prev, 0)
             x, y = self.get_new_coordinates(self.user_dire, 0)
-            print ('user: ', x, y)
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
-            print(self.user_l)
             if ([coordinatex, coordinatey] in self.user_l[:-1]) or ([coordinatex, coordinatey] in self.ai_l)  or x < 0 or y < 0 or coordinatex > 15 or coordinatey >9:
                 if [coordinatex, coordinatey] == self.user_l[-1]:
                     print ('both lose')
@@ -112,16 +110,19 @@ class Controller(QObject):
                 self.user_l.append([coordinatex, coordinatey])
                 prev = self.get_direction_rev(self.user_prev)
                 new = self.get_direction_rev(self.user_dire)
-                print ('user: ', prev, new)
                 rover_direction = self.get_rover_dir(prev, new)
                 self.recvObj1.msg = rover_direction
-                self.user.add_trace(int(x/self.multipler), int(y/self.multipler))
-                self.user_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
+                self.user.add_trace(int(x_draw/self.multipler), int(y_draw/self.multipler))
+                print (str(x_draw) + ' ' + str(y_draw), str(old_x) + ' ' + str(old_y))
+                self.user_coor_sig.emit(str(x_draw) + ' ' + str(y_draw), str(old_x) + ' ' + str(old_y))
                 self.user_prev = self.user_dire
+                map, hit = visualize_map(self.user.trace, self.ai.trace)
+                print(map)
 
     @pyqtSlot(str)
     def append_ai_data(self, data):
         # self.count += 1
+        #print(data)
         temp = data.split()
         self.data2.append(data)
         if (len(self.data2) == 10):
@@ -133,9 +134,7 @@ class Controller(QObject):
             old_x = self.ai.trace[-1].x * self.multipler
             old_y = self.ai.trace[-1].y * self.multipler
             x, y = self.get_new_coordinates(self.ai_dire, 1)
-            print ('ai: ', x, y)
             coordinatex, coordinatey = x/self.multipler, y/self.multipler 
-            print( self.ai_l)
             if ([coordinatex, coordinatey] in self.user_l) or ([coordinatex, coordinatey] in self.ai_l[:-1])  or x < 0 or y < 0 or coordinatex > 15 or coordinatey >9:
                 if [coordinatex, coordinatey] == self.user_l[-1]:
                     print ('both lose')
@@ -145,15 +144,14 @@ class Controller(QObject):
                 self.recvThread2.terminate()
             else:
                 self.ai_l.append([coordinatex, coordinatey])
+                self.ai.add_trace(int(coordinatex), int(coordinatey))
+                self.ai_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y)) ## update grid
+                self.ai_dire = attack_predict(self.ai, self.user)
                 prev = self.get_direction_rev(self.ai_prev)
                 new = self.get_direction_rev(self.ai_dire)
                 print ('ai:', prev, new)
                 rover_direction = self.get_rover_dir(prev, new)
-                print(rover_direction)
                 self.recvObj2.msg = rover_direction
-                self.ai.add_trace(int(coordinatex), int(coordinatey))
-                self.ai_coor_sig.emit(str(x) + ' ' + str(y), str(old_x) + ' ' + str(old_y))
-                self.ai_dire = attack_predict(self.ai, self.user)
                 map, hit = visualize_map(self.user.trace, self.ai.trace)
                 self.ai_prev = self.ai_dire
                 print(map)
@@ -166,8 +164,7 @@ class Controller(QObject):
         self.user_l.append([int(msg[0]), int(msg[1])])
         self.user.add_trace(int(msg[0]), int(msg[1]))
         self.user.def_init_pos(int(msg[0]), int(msg[1]))
-        self.user_prev = msg[2]
-        print (self.user_prev)
+        self.user_prev = self.get_direction(msg[2])
 
     @pyqtSlot(str)
     def ai_loc_init(self, msg):
@@ -178,8 +175,7 @@ class Controller(QObject):
         self.ai_l.append([int(msg[0]), int(msg[1])])
         self.ai.add_trace(int(msg[0]), int(msg[1]))
         self.ai.def_init_pos(int(msg[0]), int(msg[1]))
-        self.ai_prev = msg[2]
-        print(self.ai_prev)
+        self.ai_prev = self.get_direction(msg[2])
 
     @pyqtSlot(Direction)
     def user_dir(self, direction):
