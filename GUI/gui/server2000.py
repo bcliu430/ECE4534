@@ -77,34 +77,10 @@ def sendRightTurn():
     clientsocket.send(b'W')
     clientsocket.send(b'R') #turn Right test message
     clientsocket.send(b'\xfe')
-'''    
-    clientsocket.send(b'\xff')
-    clientsocket.send(b'\x01')
-    clientsocket.send(b'W')
-    clientsocket.send(b'R') #turn Right test message
-    clientsocket.send(b'\xfe')
-    
-    clientsocket.send(b'\xff')
-    clientsocket.send(b'\x01')
-    clientsocket.send(b'W')
-    clientsocket.send(b'R') #turn Right test message
-    clientsocket.send(b'\xfe')
     
     print("SENT RIGHT")
-'''    
+
 def sendStraightTurn():
-    clientsocket.send(b'\xff')
-    clientsocket.send(b'\x01')
-    clientsocket.send(b'W')
-    clientsocket.send(b'U') #turn straight test message
-    clientsocket.send(b'\xfe')
-    
-    clientsocket.send(b'\xff')
-    clientsocket.send(b'\x01')
-    clientsocket.send(b'W')
-    clientsocket.send(b'U') #turn straight test message
-    clientsocket.send(b'\xfe')
-    
     clientsocket.send(b'\xff')
     clientsocket.send(b'\x01')
     clientsocket.send(b'W')

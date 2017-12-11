@@ -1,5 +1,5 @@
-from receiver import *
-#from receiver_fake import *
+# from receiver import *
+from receiver_fake import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from tron import *
