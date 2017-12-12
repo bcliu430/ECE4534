@@ -32,46 +32,24 @@ class Receiver(QObject):
 
     @pyqtSlot()
     def recvMsg(self):
-#        self.s.connect((self.host, 2000))
         state = STATE.STARTBYTE
         data = []
         count = 0
         numbytes = 0
         while True:
-            try:
-                self.s.send(b'\x00')
-            except:
-                self.connect()
             byte = self.s.recv(1)
-            ##            print (state)
-        ##           print (byte)
             if byte:
-                if (state == STATE.STARTBYTE or byte == b'\xff'):
-                        state = STATE.NUMBYTES
-                elif (state == STATE.NUMBYTES):
-                    byte = int.from_bytes(byte, byteorder='big')
-                    data.append(str(byte))
-                    numbytes = byte
-                    state = STATE.DATATYPE
-                elif (state == STATE.DATATYPE):
-                    data.append(str(byte))
-                    state = STATE.DATA
-                elif (state == STATE.DATA):
-                    byte = int.from_bytes(byte, byteorder='big')
-                    data.append(str(byte))
-                    count += 1
-                    if (count < numbytes):
-                        state = STATE.DATATYPE
-                    else:
-#                        print('raw data')
-#                        print(data)
-                        count = 0
-                        state = STATE.STARTBYTE
+                if (byte == b'\xff'):
+                        byte = self.s.recv(1)
+                        data.append(byte.decode())
+                        byte = self.s.recv(1)
+                        data.append(str(byte))
+                        byte = self.s.recv(1)
+                          
+                        print('raw data')
+                        print(data)
                         data = ' '.join(data)
-                        data = data + '\n'
                         self.newdata.emit(data)
-#                        if ("b'P'" in data):
-#                            print ('intersect')
                         if not "b'R'" in data:
                             if self.peter_flag:
                                 self.peter_count += 1
