@@ -4,7 +4,7 @@ import serial
 from time import sleep
 
 
-dev='/dev/ttyUSB0'
+dev='/dev/ttyUSB1'
 baud=57600
 ssid='Team16_pi'
 s = serial.Serial(dev, baud, timeout=1)

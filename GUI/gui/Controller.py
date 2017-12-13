@@ -1,5 +1,5 @@
-# from receiver import *
-from receiver_fake import *
+from receiver import *
+##from receiver_fake import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from tron import *
@@ -91,7 +91,7 @@ class Controller(QObject):
             tmp = '\n'.join(self.data1)
             self.data1 = []
             self.cmd1.emit(tmp)
-        if "b'P'" in temp:
+        if 'P' in temp:
             print('user hit joint')
             ##print (self.user.trace[-1].x, self.user.trace[-1].y)
             old_x = self.user.trace[-1].x * self.multipler
@@ -129,7 +129,7 @@ class Controller(QObject):
             tmp = '\n'.join(self.data2)
             self.data2 = []
             self.cmd2.emit(tmp)
-        if "b'P'" in temp:
+        if 'P' in temp:
 #            print('ai hit joint')
             old_x = self.ai.trace[-1].x * self.multipler
             old_y = self.ai.trace[-1].y * self.multipler
